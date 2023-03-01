@@ -1,4 +1,4 @@
-defmodule Bonfire.UI.Topics.Web.RemoteCategoriesLive do
+defmodule Bonfire.UI.Topics.RemoteCategoriesLive do
   use Bonfire.UI.Common.Web, :stateful_component
   alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Me.Users

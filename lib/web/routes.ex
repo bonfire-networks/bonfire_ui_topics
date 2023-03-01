@@ -1,10 +1,10 @@
-defmodule Bonfire.UI.Topics.Web.Routes do
+defmodule Bonfire.UI.Topics.Routes do
   def declare_routes, do: nil
 
   defmacro __using__(_) do
     quote do
       # pages anyone can view
-      scope "/", Bonfire.Classify.Web do
+      scope "/", Bonfire.UI.Topics do
         pipe_through(:browser)
 
         live("/+:username", CategoryLive, as: Bonfire.Classify.Category)
@@ -26,13 +26,13 @@ defmodule Bonfire.UI.Topics.Web.Routes do
       end
 
       # pages you need an account to view
-      scope "/", Bonfire.Classify.Web do
+      scope "/", Bonfire.UI.Topics do
         pipe_through(:browser)
         pipe_through(:account_required)
       end
 
       # pages you need to view as a user
-      scope "/", Bonfire.Classify.Web do
+      scope "/", Bonfire.UI.Topics do
         pipe_through(:browser)
         pipe_through(:user_required)
       end

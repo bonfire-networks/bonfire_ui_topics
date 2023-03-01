@@ -1,4 +1,4 @@
-defmodule Bonfire.UI.Topics.Web.LabelsLive do
+defmodule Bonfire.UI.Topics.LabelsLive do
   use Bonfire.UI.Common.Web, :surface_live_view
 
   alias Bonfire.Classify.Web.CategoryLive.SubcategoriesLive
