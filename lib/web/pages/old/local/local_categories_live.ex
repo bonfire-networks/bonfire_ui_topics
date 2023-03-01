@@ -1,4 +1,4 @@
-defmodule Bonfire.Classify.Web.LocalCategoriesLive do
+defmodule Bonfire.UI.Topics.Web.LocalCategoriesLive do
   use Bonfire.UI.Common.Web, :stateful_component
   alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Me.Users

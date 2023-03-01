@@ -1,4 +1,4 @@
-defmodule Bonfire.Classify.TagMentionsTest do
+defmodule Bonfire.UI.Topics.TagMentionsTest do
   use Bonfire.Classify.DataCase, async: true
   use Bonfire.Common.Utils
 

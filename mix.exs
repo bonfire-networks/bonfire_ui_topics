@@ -1,6 +1,6 @@
 Code.eval_file("mess.exs", (if File.exists?("../../lib/mix/mess.exs"), do: "../../lib/mix/"))
 
-defmodule Bonfire.Classify.MixProject do
+defmodule Bonfire.UI.Topics.MixProject do
   use Mix.Project
 
   def project do
@@ -16,7 +16,7 @@ defmodule Bonfire.Classify.MixProject do
     end
     ++
     [
-      app: :bonfire_classify,
+      app: :bonfire_ui_topics,
       version: "0.1.0",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),

@@ -1,11 +1,10 @@
-# Bonfire.Classify
+# Bonfire.UI.Topics
 
-An extension for [Bonfire](https://bonfire.cafe/) that handles:
+An extension for [Bonfire](https://bonfire.cafe/) that handles UI for:
 
-- Defining categories/topics
-- Defining relationships (parent or related) between categories to create taxonomies
+- Browsing and using topics
 
-Use Bonfire.Tag if you want to tag/classify posts or other objects with these categories/topics.
+It builds upon the schemas and functionality in `Bonfire.Classify` and `Bonfire.Tag`.
 
 ## Handy commands
 

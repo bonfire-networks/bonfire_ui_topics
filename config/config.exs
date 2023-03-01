@@ -8,7 +8,7 @@ import Config
 # import_config "bonfire_web_phoenix.exs"
 
 # include all used Bonfire extensions
-import_config "bonfire_classify.exs"
+import_config "bonfire_ui_topics.exs"
 
 #### Basic configuration
 

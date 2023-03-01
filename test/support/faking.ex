@@ -1,5 +1,5 @@
 # # SPDX-License-Identifier: AGPL-3.0-only
-defmodule Bonfire.Classify.Test.Faking do
+defmodule Bonfire.UI.Topics.Test.Faking do
   @moduledoc false
 
   # import Bonfire.Classify.Simulate

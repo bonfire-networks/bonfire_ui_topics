@@ -1,4 +1,4 @@
-defmodule Bonfire.Classify.Test.ConnHelpers do
+defmodule Bonfire.UI.Topics.Test.ConnHelpers do
   # import ExUnit.Assertions
   # import Plug.Conn
   # import Phoenix.ConnTest

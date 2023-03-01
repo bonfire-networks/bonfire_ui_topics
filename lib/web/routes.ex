@@ -1,4 +1,4 @@
-defmodule Bonfire.Classify.Web.Routes do
+defmodule Bonfire.UI.Topics.Web.Routes do
   def declare_routes, do: nil
 
   defmacro __using__(_) do

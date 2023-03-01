@@ -1,4 +1,4 @@
-defmodule Bonfire.Classify.Repo.Migrations.InitPointers  do
+defmodule Bonfire.UI.Topics.Repo.Migrations.InitPointers  do
   @moduledoc false
   use Ecto.Migration
   import Pointers.Migration
