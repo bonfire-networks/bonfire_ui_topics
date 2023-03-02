@@ -1,7 +1,7 @@
 defmodule Bonfire.UI.Topics.CategoryLive do
   use Bonfire.UI.Common.Web, :surface_live_view
 
-  alias Bonfire.Classify.Web.CategoryLive.SubcategoriesLive
+  alias Bonfire.UI.Topics.CategoryLive.SubcategoriesLive
   alias Bonfire.Classify.Web.CommunityLive.CommunityCollectionsLive
   alias Bonfire.Classify.Web.CollectionLive.CollectionResourcesLive
 
@@ -36,7 +36,7 @@ defmodule Bonfire.UI.Topics.CategoryLive do
     # TODO: query with boundaries
     {:ok, category} = Bonfire.Classify.Categories.get(id, [:default_incl_deleted])
 
-    if category.id == Bonfire.Classify.Web.LabelsLive.label_id() do
+    if category.id == Bonfire.UI.Topics.LabelsLive.label_id() do
       {:ok,
        socket
        |> redirect_to(~p"/labels")}

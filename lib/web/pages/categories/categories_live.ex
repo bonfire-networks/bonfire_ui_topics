@@ -5,7 +5,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
   declare_extension("Topics",
     icon: "emojione:books",
     default_nav: [
-      Bonfire.Classify.Web.CategoriesLive
+      Bonfire.UI.Topics.CategoriesLive
       # Bonfire.Classify.Web.LocalCategoriesLive
       # Bonfire.Classify.Web.RemoteCategoriesLive
     ]
