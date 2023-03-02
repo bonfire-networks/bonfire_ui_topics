@@ -6,7 +6,6 @@ defmodule Bonfire.UI.Topics.Routes do
       # pages anyone can view
       scope "/", Bonfire.UI.Topics do
         pipe_through(:browser)
-
         live("/+:username", CategoryLive, as: Bonfire.Classify.Category)
         live("/+:username/:tab", CategoryLive, as: Bonfire.Classify.Category)
         live("/+:username/:tab/:tab_id", CategoryLive, as: Bonfire.Classify.Category)

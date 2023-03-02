@@ -1,0 +1,21 @@
+<Bonfire.UI.Common.WidgetBlockLive
+  widget_title={@title}
+>
+  <div :if={@icon} class="h-[150px] m-3 mb-0 bg-slate-400 rounded bg-center bg-cover"></div>
+  <div class="max-w-full p-3 prose-sm prose">
+    {@about}
+  </div>
+  <div class="flex items-center gap-2 mx-3">
+    <Icon iconify="material-symbols:calendar-month" class="w-5 h-5 text-base-content/100" />
+    <span class="text-xs text-base-content/70">Created {@date}</span>
+  </div>
+  <div class="flex items-center gap-4 py-3 mx-3">
+    <LiveRedirect :if={@group} to={@group_link} class="flex items-center gap-2">
+      <Icon iconify="mdi:account-group" class="w-5 h-5 text-base-content/100" />
+      <span class="text-xs text-base-content/70 link link-hover">In {@group}</span>
+    </LiveRedirect>
+    <div class="flex items-center gap-3">
+      <div class="text-xs text-base-content/70"><b class="text-base-content/100">67</b> Members</div>
+    </div>
+  </div>
+</Bonfire.UI.Common.WidgetBlockLive>
