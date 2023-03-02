@@ -1,7 +1,7 @@
 defmodule Bonfire.UI.Topics.CategoryLive do
   use Bonfire.UI.Common.Web, :surface_live_view
 
-  alias Bonfire.UI.Topics.CategoryLive.SubcategoriesLive
+  # alias Bonfire.UI.Topics.CategoryLive.SubcategoriesLive
   alias Bonfire.Classify.Web.CommunityLive.CommunityCollectionsLive
   alias Bonfire.Classify.Web.CollectionLive.CollectionResourcesLive
 
@@ -53,13 +53,7 @@ defmodule Bonfire.UI.Topics.CategoryLive do
         ])
 
       # TODO: query children with boundaries
-      {:ok, subcategories} =
-        Bonfire.Classify.GraphQL.CategoryResolver.category_children(
-          %{id: ulid!(category)},
-          %{limit: 15},
-          %{context: %{current_user: current_user(socket)}}
-        )
-        |> debug("subcategories")
+
 
       name = e(category, :profile, :name, l("Untitled topic"))
       object_boundary = Bonfire.Boundaries.Controlleds.get_preset_on_object(category)
@@ -67,10 +61,16 @@ defmodule Bonfire.UI.Topics.CategoryLive do
       {:ok,
        assign(
          socket,
-         page: "topics",
+         page: name,
+         page_title: name,
+         back: true,
          object_type: nil,
          feed: nil,
-         without_sidebar: true,
+         page_header_aside: [
+          {Bonfire.UI.Topics.TopicHeaderAsideLive,
+          [category: category]}
+        ],
+        #  without_sidebar: true,
          selected_tab: :timeline,
          tab_id: nil,
          #  custom_page_header:
@@ -80,9 +80,8 @@ defmodule Bonfire.UI.Topics.CategoryLive do
          category: category,
          canonical_url: canonical_url(category),
          name: name,
-         page_title: l("Topic"),
          interaction_type: l("follow"),
-         subcategories: subcategories.edges,
+        #  subcategories: subcategories.edges,
          current_context: category,
          reply_to_id: category,
          object_boundary: object_boundary,
@@ -90,7 +89,10 @@ defmodule Bonfire.UI.Topics.CategoryLive do
          context_id: ulid(category),
          sidebar_widgets: [
            users: [
-             secondary: nil
+             secondary: [
+              {Bonfire.UI.Topic.WidgetAboutLive, [title: "About " <> name, group: "Welcome", group_link: "/welcome", about: e(category, :profile, :summary, nil), date: "16 Feb"]},
+              {Bonfire.UI.Groups.WidgetMembersLive, [mods: [], members: []]}
+            ]
            ],
            guests: [
              secondary: nil
