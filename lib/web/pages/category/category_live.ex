@@ -54,7 +54,6 @@ defmodule Bonfire.UI.Topics.CategoryLive do
 
       # TODO: query children with boundaries
 
-
       name = e(category, :profile, :name, l("Untitled topic"))
       object_boundary = Bonfire.Boundaries.Controlleds.get_preset_on_object(category)
 
@@ -67,10 +66,9 @@ defmodule Bonfire.UI.Topics.CategoryLive do
          object_type: nil,
          feed: nil,
          page_header_aside: [
-          {Bonfire.UI.Topics.TopicHeaderAsideLive,
-          [category: category]}
-        ],
-        #  without_sidebar: true,
+           {Bonfire.UI.Topics.TopicHeaderAsideLive, [category: category]}
+         ],
+         #  without_sidebar: true,
          selected_tab: :timeline,
          tab_id: nil,
          #  custom_page_header:
@@ -81,7 +79,7 @@ defmodule Bonfire.UI.Topics.CategoryLive do
          canonical_url: canonical_url(category),
          name: name,
          interaction_type: l("follow"),
-        #  subcategories: subcategories.edges,
+         #  subcategories: subcategories.edges,
          current_context: category,
          reply_to_id: category,
          object_boundary: object_boundary,
@@ -90,9 +88,16 @@ defmodule Bonfire.UI.Topics.CategoryLive do
          sidebar_widgets: [
            users: [
              secondary: [
-              {Bonfire.UI.Topic.WidgetAboutLive, [title: "About " <> name, group: "Welcome", group_link: "/welcome", about: e(category, :profile, :summary, nil), date: "16 Feb"]},
-              {Bonfire.UI.Groups.WidgetMembersLive, [mods: [], members: []]}
-            ]
+               {Bonfire.UI.Topic.WidgetAboutLive,
+                [
+                  title: "About " <> name,
+                  group: "Welcome",
+                  group_link: "/welcome",
+                  about: e(category, :profile, :summary, nil),
+                  date: "16 Feb"
+                ]},
+               {Bonfire.UI.Groups.WidgetMembersLive, [mods: [], members: []]}
+             ]
            ],
            guests: [
              secondary: nil

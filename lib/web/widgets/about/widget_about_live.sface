@@ -1,7 +1,5 @@
-<Bonfire.UI.Common.WidgetBlockLive
-  widget_title={@title}
->
-  <div :if={@icon} class="h-[150px] m-3 mb-0 bg-slate-400 rounded bg-center bg-cover"></div>
+<Bonfire.UI.Common.WidgetBlockLive widget_title={@title}>
+  <div :if={@icon} class="h-[150px] m-3 mb-0 bg-slate-400 rounded bg-center bg-cover" />
   <div class="max-w-full p-3 prose-sm prose">
     {@about}
   </div>

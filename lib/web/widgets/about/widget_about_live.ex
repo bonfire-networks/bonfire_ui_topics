@@ -7,5 +7,4 @@ defmodule Bonfire.UI.Topic.WidgetAboutLive do
   prop icon, :string, default: nil
   prop group, :string, default: nil
   prop group_link, :string, default: nil
-
 end
