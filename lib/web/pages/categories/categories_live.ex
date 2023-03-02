@@ -47,6 +47,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
          l("You can start by following some people, or writing adding some tasks yourself."),
        smart_input: nil,
        search_placeholder: nil,
+       selected_tab: nil,
        sidebar_widgets: [
          users: [
            secondary: [{Bonfire.Tag.Web.WidgetTagsLive, []}]
