@@ -3,139 +3,106 @@
   <section class="w-full mx-auto">
     {#case @selected_tab}
       {#match "settings"}
-        <div class="p-6">
-          <div class="flex items-center gap-2 mb-6 text-lg font-semibold">
-            <LivePatch to={~p"/+" <> e(@category, :name, nil)} class="btn btn-xs btn-ghost btn-circle">
-              <Icon outline="ChevronLeft" class="w-4 h-4 text-base-content/80" />
-            </LivePatch>
-            <span>{e(@category, :name, nil)} {l("settings")}</span>
+        <div class="">
+          <div class="flex items-center justify-between p-3 px-4 pt-1 md:pt-4">
+            <nav 
+              role="tabpanel" 
+              class="flex gap-3" 
+              aria-label="Switch between tabs">
+              <LiveRedirect
+                to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}/settings"}
+                class={"btn btn-sm !max-h-[1.75rem] !h-[1.75rem] !min-h-[1.75rem] rounded-full font-normal normal-case bg-base-content/10 feed_tab text-base-content/70 border-none", "active text-base-content/100": @tab_id == nil}
+              >{l("General")}
+              </LiveRedirect>
+              <LiveRedirect
+                to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}/settings/notifications"}
+                class={"btn btn-sm !max-h-[1.75rem] !h-[1.75rem] !min-h-[1.75rem] rounded-full font-normal normal-case bg-base-content/10 feed_tab text-base-content/70 border-none", "active text-base-content/100": @tab_id == "notifications"}
+              >{l("Notifications")}
+              </LiveRedirect>
+              <LiveRedirect
+                to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}/settings/submissions"}
+                class={"btn btn-sm !max-h-[1.75rem] !h-[1.75rem] !min-h-[1.75rem] rounded-full font-normal normal-case bg-base-content/10 feed_tab text-base-content/70 border-none", "active text-base-content/100": @tab_id == "submissions"}
+              >{l("Submissions")}
+              </LiveRedirect>
+            </nav>
+            <LiveRedirect to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}"} class="btn btn-sm btn-circle">
+              <Icon outline="X" class="w-5 h-5" />
+            </LiveRedirect>
           </div>
-          <div class="px-2 -mx-6 border-b tabs border-base-content/20">
-            <LivePatch
-              to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}/settings"}
-              class={"tab tab-bordered", "tab-active": @tab_id == nil}
-            >{l("General")}</LivePatch>
-            <LivePatch
-              to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}/settings/roles"}
-              class={"tab tab-bordered", "tab-active": @tab_id == "roles"}
-            >{l("Roles")}</LivePatch>
-            <LivePatch
-              to={~p"/+#{e(@category, :character, :username, nil) || ulid(@category)}/settings/suggestions"}
-              class={"tab tab-bordered", "tab-active": @tab_id == "suggestions"}
-            >{l("Suggestions")}</LivePatch>
-          </div>
-
           {#case @tab_id}
-            {#match "roles"}
-              <div class="py-6">
+            {#match "notifications"}
+              <div class="">
+                <Bonfire.UI.Common.TeamLive />
+              </div>
+            {#match "submissions"}
+              <div class="">
                 <Bonfire.UI.Common.TeamLive />
               </div>
             {#match _}
-              <div class="py-6">
-                <div class="divide-y divide-base-300">
-                  <div x-data="{open: false}" class="p-6 rounded-t shadow bg-base-100">
-                    <div class="flex items-center justify-between">
-                      <div class="flex flex-col gap-1">
-                        <div class="text-sm font-bold">{l("Name & description")}</div>
-                        <div class="text-sm font-light text-base-content/70">{l("Identify this topic")}</div>
-                      </div>
-                      <button type="button" x-on:click="open = !open" class="normal-case btn btn-sm">{l("Expand")}</button>
-                    </div>
-                    <div x-show="open" x-collapse>
-                      <form name="settings">
-                        <div class="w-full max-w-lg mt-8 form-control">
-                          <label for="instance_name" class="label">
-                            <span class="label-text text-base-content/70">{l("The name of this topic")}</span>
-                          </label>
-                          <div class="mt-1 mb-4 sm:mt-0 sm:col-span-2">
-                            <div class="flex max-w-lg">
-                              <input
-                                type="text"
-                                name="ui[theme][instance_name]"
-                                id="instance_name"
-                                value={e(@category, :name, "")}
-                                class="w-full h-10 input bg-base-content/10"
-                              />
+              <div class="">
+                <form name="settings">
+                  <div class="flex flex-col w-full gap-8 p-6 mt-6">
+
+                    <div
+                      data-id="upload_image"
+                      class="relative flex justify-center w-24 h-24 mx-auto bg-center bg-cover rounded-full min-w-24 shrink-0 bg-base-content/5"
+                      style="background-image: url()"
+                    >
+                      <div class="space-y-1 text-center">
+                        <div class="flex text-sm text-base-content/70">
+                          <label class="absolute inset-0 flex flex-col items-center justify-center w-full h-full text-sm font-medium text-white transition duration-150 ease-in-out rounded-lg opacity-0 cursor-pointer bg-base-100 bg-opacity-40 hover:opacity-60 focus-within:opacity-60">
+                            <div class="text-center">
+                              <span>{l("Add an icon")}</span>
                             </div>
-                          </div>
-                        </div>
-
-                        <div class="w-full max-w-lg mt-2 form-control">
-                          <label for="instance_description" class="label">
-                            <span class="label-text text-base-content/70">{l("A short topic summary")}</span>
                           </label>
-
-                          <textarea
-                            id="instance_description"
-                            name="ui[theme][instance_description]"
-                            rows="3"
-                            class="w-full h-24 textarea bg-base-content/10"
-                          >{e(@category, :note, "")}</textarea>
                         </div>
-                        <div class="mt-3">
-                          <button type="submit" class="normal-case btn-wide btn btn-sm btn-primary">
-                            {l("Save")}
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div x-data="{open: false}" class="p-6 rounded-t shadow bg-base-100">
-                    <div class="flex items-center justify-between">
-                      <div class="flex flex-col gap-1">
-                        <div class="text-sm font-bold">{l("Topics order")}</div>
                       </div>
-                      <button type="button" x-on:click="open = !open" class="normal-case btn btn-sm">{l("Expand")}</button>
                     </div>
-                    <div x-show="open" x-collapse>
-                      <form name="settings">
-                        <div class="w-full max-w-lg mt-8 form-control">
-                          <label for="instance_name" class="label">
-                            <span class="label-text text-base-content/70">{l("The name of this topic")}</span>
-                          </label>
-                          <div class="mt-1 mb-4 sm:mt-0 sm:col-span-2">
-                            <div class="flex max-w-lg">
-                              <input
-                                type="text"
-                                name="ui[theme][instance_name]"
-                                id="instance_name"
-                                value={e(@category, :name, "")}
-                                class="w-full h-10 input bg-base-content/10"
-                              />
-                            </div>
-                          </div>
+                    <div class="w-full max-w-lg mx-auto mt-2 form-control">
+                      <label for="instance_name" class="label">
+                        <span class="label-text text-base-content/70">{l("The name of this topic")}</span>
+                      </label>
+                      <div class="mt-1 mb-4 sm:mt-0 sm:col-span-2">
+                        <div class="flex max-w-lg">
+                          <input
+                            type="text"
+                            name="ui[theme][instance_name]"
+                            id="instance_name"
+                            value={e(@category, :name, "")}
+                            class="w-full h-10 input bg-base-content/10"
+                          />
                         </div>
-
-                        <div class="w-full max-w-lg mt-2 form-control">
-                          <label for="instance_description" class="label">
-                            <span class="label-text text-base-content/70">{l("A short topic summary")}</span>
-                          </label>
-
-                          <textarea
-                            id="instance_description"
-                            name="ui[theme][instance_description]"
-                            rows="3"
-                            class="w-full h-24 textarea bg-base-content/10"
-                          >{e(@category, :note, "")}</textarea>
-                        </div>
-                        <div class="mt-3">
-                          <button type="submit" class="normal-case btn-wide btn btn-sm btn-primary">
-                            {l("Save")}
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div class="p-6 shadow bg-base-100">
-                    <div class="flex items-center justify-between">
-                      <div class="flex flex-col gap-1">
-                        <div class="text-sm font-bold">{l("Show topic in Homepage")}</div>
-                        <!-- <div class="text-sm font-light text-base-content/70">{@label}</div> -->
                       </div>
-                      <input name="Bonfire.Me.Users[discoverable]" value="true" type="checkbox" class="toggle">
+
+                  
+                      <label for="instance_description" class="label">
+                        <span class="label-text text-base-content/70">{l("A short topic summary")}</span>
+                      </label>
+
+                      <textarea
+                        id="instance_description"
+                        name="ui[theme][instance_description]"
+                        rows="3"
+                        class="w-full h-24 textarea bg-base-content/10"
+                      >{e(@category, :note, "")}</textarea>
+
+                      <select class="w-full mt-6 select select-bordered">
+                        <option selected>Announcements: Only mods can post</option>
+                        <option>Curated: Members can post</option>
+                        <option>Public: Anyone can post</option>
+                      </select>
+                      <div class="flex justify-end mt-6">
+                        <button type="submit" class="normal-case btn btn-primary">
+                          {l("Save")}
+                        </button>
+                      </div>
                     </div>
+                  
                   </div>
-                </div>
+                </form>
+                
+
+
               </div>
           {/case}
         </div>
