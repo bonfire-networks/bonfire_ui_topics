@@ -5,13 +5,14 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
   declare_extension("Topics",
     icon: "emojione:books",
     default_nav: [
-      Bonfire.UI.Topics.CategoriesLive
+      Bonfire.UI.Topics.CategoriesLive,
+      Bonfire.UI.Groups.SidebarGroupsLive
       # Bonfire.Classify.Web.LocalCategoriesLive
       # Bonfire.Classify.Web.RemoteCategoriesLive
     ]
   )
 
-  declare_nav_link(l("Explore"), icon: "heroicons-solid:newspaper")
+  declare_nav_link(l("Explore Topics"), icon: "heroicons-solid:newspaper")
 
   def mount(params, session, socket) do
     live_plug(params, session, socket, [

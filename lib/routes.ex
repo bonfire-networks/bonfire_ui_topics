@@ -7,6 +7,8 @@ defmodule Bonfire.UI.Topics.Routes do
       scope "/", Bonfire.UI.Topics do
         pipe_through(:browser)
         live("/+:username", CategoryLive, as: Bonfire.Classify.Category)
+        live("/+:username", CategoryLive, as: :topic)
+
         live("/+:username/:tab", CategoryLive, as: Bonfire.Classify.Category)
         live("/+:username/:tab/:tab_id", CategoryLive, as: Bonfire.Classify.Category)
         # note: order matters for Voodoo!
