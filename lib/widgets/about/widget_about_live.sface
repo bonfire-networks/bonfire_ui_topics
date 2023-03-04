@@ -8,12 +8,12 @@
     <span class="text-xs text-base-content/70">Created {@date}</span>
   </div>
   <div class="flex items-center gap-4 py-3 mx-3">
-    <LiveRedirect :if={@group} to={@group_link} class="flex items-center gap-2">
+    <LiveRedirect :if={@parent} to={@parent_link} class="flex items-center gap-2">
       <Icon iconify="mdi:account-group" class="w-5 h-5 text-base-content/100" />
-      <span class="text-xs text-base-content/70 link link-hover">In {@group}</span>
+      <span class="text-xs text-base-content/70 link link-hover">In {@parent}</span>
     </LiveRedirect>
     <div class="flex items-center gap-3">
-      <div class="text-xs text-base-content/70"><b class="text-base-content/100">67</b> Members</div>
+      <div class="text-xs text-base-content/70"><b class="text-base-content/100">{@member_count}</b> Members</div>
     </div>
   </div>
 </Bonfire.UI.Common.WidgetBlockLive>

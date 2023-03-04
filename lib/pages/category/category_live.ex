@@ -15,96 +15,8 @@ defmodule Bonfire.UI.Topics.CategoryLive do
       Bonfire.UI.Common.LivePlugs.StaticChanged,
       Bonfire.UI.Common.LivePlugs.Csrf,
       Bonfire.UI.Common.LivePlugs.Locale,
-      &mounted/3
+      &Bonfire.Classify.LiveHandler.mounted/3
     ])
-  end
-
-  defp mounted(params, _session, socket) do
-    top_level_category = System.get_env("TOP_LEVEL_CATEGORY", "")
-
-    id =
-      if !is_nil(params["id"]) and params["id"] != "" do
-        params["id"]
-      else
-        if !is_nil(params["username"]) and params["username"] != "" do
-          params["username"]
-        else
-          top_level_category
-        end
-      end
-
-    # TODO: query with boundaries
-    {:ok, category} = Bonfire.Classify.Categories.get(id, [:default_incl_deleted])
-
-    if category.id == Bonfire.UI.Topics.LabelsLive.label_id() do
-      {:ok,
-       socket
-       |> redirect_to(~p"/labels")}
-    else
-      category =
-        category
-        |> repo().maybe_preload([
-          :creator,
-          parent_category: [
-            :profile,
-            :character,
-            parent_category: [:profile, :character]
-          ]
-        ])
-
-      # TODO: query children with boundaries
-
-      name = e(category, :profile, :name, l("Untitled topic"))
-      object_boundary = Bonfire.Boundaries.Controlleds.get_preset_on_object(category)
-
-      {:ok,
-       assign(
-         socket,
-         page: name,
-         page_title: name,
-         back: true,
-         object_type: nil,
-         feed: nil,
-         page_header_aside: [
-           {Bonfire.UI.Topics.TopicHeaderAsideLive, [category: category]}
-         ],
-         #  without_sidebar: true,
-         selected_tab: :timeline,
-         tab_id: nil,
-         #  custom_page_header:
-         #    {Bonfire.Classify.Web.CategoryHeaderLive,
-         #     category: category, object_boundary: object_boundary},
-         smart_input_opts: %{text: "+#{e(category, :character, :username, nil)} "},
-         category: category,
-         canonical_url: canonical_url(category),
-         name: name,
-         interaction_type: l("follow"),
-         #  subcategories: subcategories.edges,
-         current_context: category,
-         reply_to_id: category,
-         object_boundary: object_boundary,
-         #  create_object_type: :category,
-         context_id: ulid(category),
-         sidebar_widgets: [
-           users: [
-             secondary: [
-               {Bonfire.UI.Topic.WidgetAboutLive,
-                [
-                  title: "About " <> name,
-                  group: "Welcome",
-                  group_link: "/welcome",
-                  about: e(category, :profile, :summary, nil),
-                  date: "16 Feb"
-                ]},
-               {Bonfire.UI.Groups.WidgetMembersLive, [mods: [], members: []]}
-             ]
-           ],
-           guests: [
-             secondary: nil
-           ]
-         ]
-       )}
-    end
   end
 
   def tab(selected_tab) do
@@ -116,93 +28,6 @@ defmodule Bonfire.UI.Topics.CategoryLive do
     # |> debug
   end
 
-  def do_handle_params(%{"tab" => tab} = params, _url, socket)
-      when tab in ["posts", "boosts", "timeline"] do
-    Bonfire.Social.Feeds.LiveHandler.user_feed_assign_or_load_async(
-      tab,
-      e(socket.assigns, :category, nil),
-      params,
-      socket
-    )
-  end
-
-  def do_handle_params(%{"tab" => tab, "tab_id" => tab_id}, _url, socket) do
-    # debug(id)
-    {:noreply,
-     assign(socket,
-       selected_tab: tab,
-       tab_id: tab_id
-     )}
-  end
-
-  def do_handle_params(%{"tab_id" => "suggestions" = tab_id} = params, _url, socket) do
-    {:noreply,
-     assign(
-       socket,
-       Bonfire.Social.Feeds.LiveHandler.load_user_feed_assigns(
-         "submitted",
-         e(socket.assigns, :category, :character, :notifications_id, nil),
-         Map.put(
-           params,
-           :exclude_feed_ids,
-           e(socket.assigns, :category, :character, :outbox_id, nil)
-         ),
-         socket
-       )
-     )}
-  end
-
-  # def do_handle_params(%{"tab" => "settings", "tab_id" => "submitted"} = params, _url, socket) do
-  #   # Bonfire.Social.Feeds.LiveHandler.user_feed_assign_or_load_async("timeline", {tab, e(socket.assigns, :category, :character, :notifications_id, nil) |> debug("notifications_id")}, params, socket) # FIXME
-  #   debug("QUIQUIQUI")
-  #   {:noreply,
-  #    assign(
-  #      socket,
-  #      Bonfire.Social.Feeds.LiveHandler.load_user_feed_assigns(
-  #        tab,
-  #        e(socket.assigns, :category, :character, :notifications_id, nil),
-  #        Map.put(
-  #          params,
-  #          :exclude_feed_ids,
-  #          e(socket.assigns, :category, :character, :outbox_id, nil)
-  #        ),
-  #        socket
-  #      )
-  #    )}
-  # end
-
-  def do_handle_params(%{"tab" => tab} = params, _url, socket)
-      when tab in ["followers"] do
-    {:noreply,
-     assign(
-       socket,
-       Bonfire.Social.Feeds.LiveHandler.load_user_feed_assigns(
-         tab,
-         e(socket.assigns, :category, nil),
-         params,
-         socket
-       )
-     )}
-  end
-
-  def do_handle_params(%{"tab" => tab}, _url, socket) do
-    {:noreply,
-     assign(socket,
-       selected_tab: tab
-     )}
-
-    # nothing defined
-  end
-
-  def do_handle_params(params, _url, socket) do
-    # default tab
-    do_handle_params(
-      Map.merge(params || %{}, %{"tab" => "timeline"}),
-      nil,
-      socket
-    )
-  end
-
   def handle_params(params, uri, socket),
     do:
       Bonfire.UI.Common.LiveHandlers.handle_params(
@@ -210,7 +35,7 @@ defmodule Bonfire.UI.Topics.CategoryLive do
         uri,
         socket,
         __MODULE__,
-        &do_handle_params/3
+        &Bonfire.Classify.LiveHandler.do_handle_params/3
       )
 
   def handle_event(
