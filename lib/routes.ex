@@ -9,6 +9,8 @@ defmodule Bonfire.UI.Topics.Routes do
         live("/+:username", CategoryLive, as: Bonfire.Classify.Category)
         live("/+:username", CategoryLive, as: :topic)
 
+        live("/+:username/settings", CategoryLive, :settings, as: Bonfire.Classify.Category)
+        live("/+:username/submitted", CategoryLive, :submitted, as: Bonfire.Classify.Category)
         live("/+:username/:tab", CategoryLive, as: Bonfire.Classify.Category)
         live("/+:username/:tab/:tab_id", CategoryLive, as: Bonfire.Classify.Category)
         # note: order matters for Voodoo!

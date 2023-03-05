@@ -42,10 +42,10 @@
       </div>
 
       <div class="w-full form-control">
-        <select class="w-full select select-bordered">
-          <option selected>Announcements: Only mods can post</option>
-          <option>Curated: Members can post</option>
-          <option>Public: Anyone can post</option>
+        <select name="to_boundaries" class="w-full select select-bordered">
+          <option value="" selected>Standard: inherits the boundaries of the group</option>
+          <option value="annoucement" disabled>Announcements: Only group caretakers can post</option>
+          <!-- <option>Public: Anyone can post</option> -->
         </select>
       </div>
 
@@ -77,8 +77,9 @@
     </Form>
   </div>
   <:open_btn>
-    <button type="button" class="rounded btn btn-ghost btn-square btn-xs">
+    <button type="button" class="flex rounded btn btn-ghost btn-square btn-xs">
       <Icon iconify="mdi:plus" class="w-4 h-4 text-base-content/70" />
+      <span :if={@label}>{@label}</span>
     </button>
   </:open_btn>
 </Bonfire.UI.Common.OpenModalLive>
