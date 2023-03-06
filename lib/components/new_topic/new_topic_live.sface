@@ -2,6 +2,7 @@
   id={Pointers.ULID.generate()}
   title_text={title(l("Create a new topic"), e(@parent, :profile, :name, nil))}
   no_actions
+  open_btn_wrapper_class="w-full block px-4 py-2"
 >
   <div x-data="{ name: '' }" class="flex flex-col w-full gap-3 mt-6">
     <Form
@@ -88,8 +89,8 @@
     </Form>
   </div>
   <:open_btn>
-    <button type="button" class="flex rounded btn btn-ghost btn-square btn-xs">
-      <Icon iconify="mdi:plus" class="w-4 h-4 text-base-content/70" />
+    <button type="button" class="flex items-center gap-2 text-sm text-neutral-content/80 ">
+      <Icon iconify="mdi:plus" class="w-4 h-4 shrink-0" />
       <span :if={@label}>{@label}</span>
     </button>
   </:open_btn>
