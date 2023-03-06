@@ -50,7 +50,7 @@
             {#match _}
               <div class="">
                 <form name="settings">
-                  <div class="flex flex-col w-full gap-8 p-6 mt-6">
+                  <div class="flex flex-col w-full p-4">
                     <div
                       data-id="upload_image"
                       class="relative flex justify-center w-24 h-24 mx-auto bg-center bg-cover rounded-full min-w-24 shrink-0 bg-base-content/5"
@@ -66,12 +66,12 @@
                         </div>
                       </div>
                     </div>
-                    <div class="w-full max-w-lg mx-auto mt-2 form-control">
+                    <div class="w-full mx-auto mt-2 form-control">
                       <label for="instance_name" class="label">
                         <span class="label-text text-base-content/70">{l("The name of this topic")}</span>
                       </label>
                       <div class="mt-1 mb-4 sm:mt-0 sm:col-span-2">
-                        <div class="flex max-w-lg">
+                        <div class="flex">
                           <input
                             type="text"
                             name="ui[theme][instance_name]"

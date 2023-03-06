@@ -4,8 +4,9 @@
   no_actions
   open_btn_wrapper_class="w-full block px-4 py-2"
 >
-  <div x-data="{ name: '' }" class="flex flex-col w-full gap-3 mt-6">
+  <div x-data="{ name: '' }" class="">
     <Form
+      class="flex flex-col w-full gap-3 mt-6"
       for={:category}
       submit="Bonfire.UI.Topics:new"
       action="Bonfire.UI.Topics:new"

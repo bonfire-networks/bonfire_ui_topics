@@ -33,6 +33,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
        page: "topics",
        page_title: l("Topics"),
        categories: [],
+       nav_items: Bonfire.Common.ExtensionModule.default_nav(:bonfire_ui_social),
        feed: nil,
        #  without_sidebar: true,
        page_info: nil,
