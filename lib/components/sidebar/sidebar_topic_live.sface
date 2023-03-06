@@ -5,7 +5,7 @@
   </LiveRedirect>
 
   <ul class="gap-1 my-2 menu" :if={@children && @children != []}>
-    <Bonfire.UI.Groups.SidebarTopicLive
+    <Bonfire.UI.Topics.SidebarTopicLive
       :for={{subcategory, subchildren} <- @children}
       category={subcategory}
       children={subchildren}

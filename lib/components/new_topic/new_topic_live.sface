@@ -14,6 +14,8 @@
         "phx-target": "#modal"
       }
     >
+      <!-- 
+      NOTE: let's upload in settings for now
       <div
         data-id="upload_image"
         class="relative flex justify-center w-24 h-24 py-10 mx-auto bg-center bg-cover rounded-full bg-base-content/5"
@@ -29,6 +31,7 @@
           </div>
         </div>
       </div>
+      -->
 
       <div class="w-full form-control">
         <input
@@ -38,6 +41,14 @@
           type="text"
           placeholder={l("Type the topic name")}
           class="w-full text-sm input input-bordered"
+        />
+      </div>
+
+      <div class="w-full form-control">
+        <textarea
+          name="summary"
+          class="w-full textarea textarea-bordered"
+          placeholder="Write a short description"
         />
       </div>
 

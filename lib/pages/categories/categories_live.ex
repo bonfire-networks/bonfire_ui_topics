@@ -32,20 +32,10 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
        socket,
        page: "topics",
        page_title: l("Topics"),
-       create_object_type: :category,
-       smart_input_opts: %{prompt: l("New topic")},
        categories: [],
        feed: nil,
        #  without_sidebar: true,
        page_info: nil,
-       loading: false,
-       feed_title: l("My coordination feed"),
-       feed_component_id: :feeds,
-       feed_id: nil,
-       feed_ids: nil,
-       feedback_title: l("Your feed is empty"),
-       feedback_message:
-         l("You can start by following some people, or writing adding some tasks yourself."),
        smart_input: nil,
        search_placeholder: nil,
        selected_tab: nil,
@@ -60,127 +50,15 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
      )}
   end
 
-  def do_handle_params(%{"tab" => "followed" = tab} = params, _url, socket) do
-    current_user = current_user_required!(socket)
-
-    if is_nil(current_user), do: raise(Bonfire.Fail.Auth, :needs_login)
-
-    followed =
-      Bonfire.Social.Follows.list_my_followed(current_user,
-        pagination: %{limit: 500},
-        type: Bonfire.Classify.Category
-      )
-
-    followed_categories =
-      followed
-      |> e(:edges, [])
-      |> Enum.map(&e(&1, :edge, :object, nil))
-
-    {:noreply,
-     socket
-     |> assign(
-       categories: followed_categories,
-       page: "topics_followed",
-       page_title: l("Followed Topics"),
-       selected_tab: "followed",
-       feed_title: l("Published in followed topics")
-       #  limit: limit
-     )
-     # FIXME: better pagination
-     |> assign(
-       Bonfire.Social.Feeds.LiveHandler.feed_assigns_maybe_async(
-         Bonfire.Social.Feeds.feed_ids(:outbox, followed_categories),
-         socket
-       )
-       |> debug("feed_assigns_maybe_async")
-     )}
-  end
-
-  def do_handle_params(params, _url, socket) do
-    limit = Bonfire.Common.Config.get(:default_pagination_limit, 10)
-
-    {:ok, categories} =
-      Bonfire.Classify.GraphQL.CategoryResolver.categories_toplevel(
-        %{limit: limit},
-        %{context: %{current_user: current_user(socket)}}
-      )
-
-    # |> debug()
-
-    {:noreply,
-     socket
-     |> assign(
-       categories: e(categories, :edges, []),
-       page_info: e(categories, :page_info, []),
-       page: "topics",
-       page_title: l("Topics"),
-       selected_tab: "all",
-       feed_title: l("Published in all known topics"),
-       limit: limit
-     )
-     |> assign(
-       Bonfire.Social.Feeds.LiveHandler.feed_assigns_maybe_async(
-         Bonfire.Tag.Tagged.q_with_type(Bonfire.Classify.Category),
-         socket
-       )
-       |> debug("feed_assigns_maybe_async")
-     )}
-  end
-
   def handle_params(params, uri, socket),
     do:
       Bonfire.UI.Common.LiveHandlers.handle_params(
-        params,
+        Map.put(params, "tab", "discover"),
         uri,
         socket,
         __MODULE__,
-        &do_handle_params/3
+        &Bonfire.Classify.LiveHandler.do_handle_params/3
       )
-
-  # def do_handle_event("topics:load_more", attrs, socket) do
-  #   # debug(attrs)
-  #   limit = e(socket.assigns, :limit, 10)
-
-  #   {:ok, categories} =
-  #     Bonfire.Classify.GraphQL.CategoryResolver.categories_toplevel(
-  #       %{limit: limit, after: [e(attrs, "after", nil)]},
-  #       %{context: %{current_user: current_user(socket)}}
-  #     )
-
-  #   # |> debug()
-
-  #   {:noreply,
-  #    assign(
-  #      socket,
-  #      categories: e(socket.assigns, :categories, []) ++ e(categories, :edges, []),
-  #      page_info: e(categories, :page_info, [])
-  #    )}
-  # end
-
-  # def do_handle_event("topics_followed:load_more", attrs, socket) do
-  #   limit = e(socket.assigns, :limit, 10)
-
-  #   categories =
-  #     Bonfire.Social.Follows.list_my_followed(current_user_required!(socket),
-  #       limit: limit,
-  #       after: e(attrs, "after", nil),
-  #       type: Bonfire.Classify.Category
-  #     )
-
-  #   page =
-  #     categories
-  #     |> e(:edges, [])
-  #     |> Enum.map(&e(&1, :edge, :object, nil))
-
-  #   # |> debug("TESTTTT")
-
-  #   {:noreply,
-  #    assign(
-  #      socket,
-  #      categories: e(socket.assigns, :categories, []) ++ page,
-  #      page_info: e(categories, :page_info, [])
-  #    )}
-  # end
 
   def handle_event(
         action,
