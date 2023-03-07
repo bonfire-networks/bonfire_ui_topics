@@ -3,5 +3,4 @@ defmodule Bonfire.UI.Topics.Settings.ModerationLive do
 
   prop selected_tab, :any, default: nil
   prop feed, :any, required: true
-
 end

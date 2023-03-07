@@ -3,5 +3,4 @@ defmodule Bonfire.UI.Topics.Settings.MembersLive do
 
   prop selected_tab, :any, default: nil
   prop users, :list, required: true
-
 end

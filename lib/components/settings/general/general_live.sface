@@ -1,5 +1,4 @@
 <div class="flex flex-col gap-3 p-4 pt-0">
-
   <div class="w-full form-control">
     <input
       x-model="name"
@@ -26,10 +25,7 @@
     </select>
   </div>
 
-  <button
-    type="submit"
-    class="w-full mt-3 normal-case btn btn-primary"
-  >
+  <button type="submit" class="w-full mt-3 normal-case btn btn-primary">
     {l("Edit")}
   </button>
 </div>

@@ -1,4 +1,4 @@
-<Bonfire.UI.Common.WidgetBlockLive widget_title={"About"}>
+<Bonfire.UI.Common.WidgetBlockLive widget_title="About">
   <div
     :if={Media.avatar_url(@category) != "/images/avatar.png"}
     class="h-[150px] m-3 mb-0 bg-slate-400 rounded bg-center bg-cover"
@@ -41,7 +41,7 @@
     </div>
   </div>
   <div class="flex flex-col gap-3 p-3">
-   <Bonfire.UI.Common.FollowButtonLive
+    <Bonfire.UI.Common.FollowButtonLive
       :if={not is_nil(e(@category, :character, nil))}
       id={ComponentID.new(Bonfire.UI.Common.FollowButtonLive, ulid(@category))}
       object_id={ulid(@category)}

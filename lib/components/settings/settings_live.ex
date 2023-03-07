@@ -3,6 +3,7 @@ defmodule Bonfire.UI.Topics.SettingsLive do
   import Bonfire.UI.Me.Integration
 
   prop selected_tab, :any, default: nil
+  prop tab_id, :any, default: nil
   prop topic, :any, required: true
   prop permalink, :any, required: true
   prop object_boundary, :any, default: nil

@@ -25,13 +25,13 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
         network: [],
         settings: [
           sections: [
-            general: Bonfire.UI.Topics.Settings.GeneralLive,
-            members: Bonfire.UI.Topics.Settings.MembersLive,
+            nil: Bonfire.UI.Topics.Settings.GeneralLive,
+            membership: Bonfire.UI.Topics.Settings.MembersLive,
             moderation: Bonfire.UI.Topics.Settings.ModerationLive
           ],
           navigation: [
-            general: "General",
-            members: "Members",
+            nil: "General",
+            membership: "Members",
             moderation: "Moderation"
           ]
         ]

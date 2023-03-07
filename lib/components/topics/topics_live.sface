@@ -1,7 +1,5 @@
 <div class="">
-  <Bonfire.UI.Social.Activity.CategoryLive
-    object={@category}
-  />
+  <Bonfire.UI.Social.Activity.CategoryLive object={@category} />
   <!-- <LiveRedirect
     to={path(@category)}
     class="flex gap-1 rounded shadow-xl cursor-pointer bg-base-content/5 hover:bg-base-content/10"
