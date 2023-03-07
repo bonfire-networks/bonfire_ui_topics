@@ -14,13 +14,13 @@
   <div class="flex items-center gap-2 mx-3 mt-3">
     {#case @boundary_preset}
       {#match {"open", _boundary_name}}
-        <Icon solid="Globe" class="w-5 h-5 font-normal text-base-content/70" />
+        <Icon solid="Globe" class="w-5 h-5 font-normal text-base-content/70 shrink-0" />
         <span class="text-xs text-base-content/70">{l("Open: anyone can join and participate")}</span>
       {#match {"visible", _boundary_name}}
-        <Icon iconify="fa-solid:book-reader" class="w-5 h-5 font-normal text-base-content/70" />
-        <span class="text-xs text-base-content/70">{l("Visible: everyone can browse the group/topics/posts, and request to join")}</span>
+        <Icon iconify="mdi:eye-outline" class="w-5 h-5 font-normal text-base-content/70 shrink-0" />
+        <span class="text-xs text-base-content/70">{l("Visible: everyone can browse and request to join")}</span>
       {#match {"private", _boundary_name}}
-        <Icon solid="LockClosed" class="w-5 h-5 font-normal text-base-content/70" />
+        <Icon solid="LockClosed" class="w-5 h-5 font-normal text-base-content/70 shrink-0" />
         <span class="text-xs text-base-content/70">{l("Private: only people who are invited can see and join the group")}</span>
       {#match {_, boundary_name}}
         <span class="text-xs text-base-content/70">{boundary_name}</span>
