@@ -47,7 +47,7 @@
       object_id={ulid(@category)}
       path={path(@category)}
       hide_icon
-      class="w-full normal-case rounded btn-sm btn btn-outline !border-opacity-70"
+      class="w-full normal-case rounded btn-sm btn btn-outline bg-base-content text-base-300 !border-opacity-70"
     />
     <!-- <button class="w-full normal-case rounded btn-sm btn btn-outline !border-opacity-70">{l("Create post")}</button> -->
   </div>

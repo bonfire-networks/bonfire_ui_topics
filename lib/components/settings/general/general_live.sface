@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-3 p-4 pt-0">
+
+  <div class="w-full form-control">
+    <input
+      x-model="name"
+      id="name"
+      name="name"
+      type="text"
+      placeholder={l("Type the topic name")}
+      class="w-full text-sm input input-bordered"
+    />
+  </div>
+  <div class="w-full form-control">
+    <textarea
+      name="summary"
+      class="w-full textarea textarea-bordered"
+      placeholder="Write a short description"
+    />
+  </div>
+
+  <div class="w-full form-control">
+    <select name="to_boundaries[]" class="select select-bordered">
+      <option value="open">{l("Open: anyone can join and participate")}</option>
+      <option value="visible" selected>{l("Visible: everyone can browse the group/topics/posts, and request to join")}</option>
+      <option value="private">{l("Private: only people who are invited can see and join the group")}</option>
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    class="w-full mt-3 normal-case btn btn-primary"
+  >
+    {l("Edit")}
+  </button>
+</div>

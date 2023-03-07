@@ -1,6 +1,6 @@
 import Config
 
-#### Email configuration
+#### Basic configuration useful for tests, everything else should be in `Bonfire.UI.Topics.RuntimeConfig`
 
 # You will almost certainly want to change at least some of these
 

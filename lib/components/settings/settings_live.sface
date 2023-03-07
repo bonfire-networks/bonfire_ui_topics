@@ -1,0 +1,11 @@
+<Bonfire.UI.Common.TabsLive
+  selected_tab={@selected_tab}
+  path_prefix={"/topic/#{e(@topic, :character, :username, "")}/settings/"}
+  tabs={Config.get([:ui, :topic, :settings, :navigation], general: l("General"))}
+/>
+
+<Dynamic.Component
+    module={Config.get([:ui, :topic, :settings, :sections, tab(@selected_tab)], Bonfire.UI.Topics.Settings.GeneralLive)}
+    {...assigns}
+  >
+</Dynamic.Component>
