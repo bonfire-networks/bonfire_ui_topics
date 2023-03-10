@@ -17,10 +17,13 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
       topic: [
         sections: [
           timeline: Bonfire.UI.Social.ProfileTimelineLive,
-          settings: Bonfire.UI.Topics.SettingsLive
+          settings: Bonfire.UI.Topics.SettingsLive,
+          followers: Bonfire.UI.Social.ProfileFollowsLive,
+          follow: Bonfire.UI.Me.RemoteInteractionFormLive
         ],
         navigation: [
-          timeline: "Timeline"
+          timeline: l("Timeline"),
+          followers: l("Followers")
         ],
         network: [],
         settings: [
@@ -30,9 +33,9 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
             moderation: Bonfire.UI.Topics.Settings.ModerationLive
           ],
           navigation: [
-            nil: "General",
-            membership: "Members",
-            moderation: "Moderation"
+            nil: l("General"),
+            membership: l("Members"),
+            moderation: l("Moderation")
           ]
         ]
       ]

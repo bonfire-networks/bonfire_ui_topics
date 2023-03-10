@@ -9,10 +9,8 @@ defmodule Bonfire.UI.Topics.Routes do
         live("/+:username", CategoryLive, as: Bonfire.Classify.Category)
         live("/+:username", CategoryLive, as: :topic)
 
-        live("/+:username/settings", CategoryLive, :settings, as: Bonfire.Classify.Category)
-        live("/+:username/submitted", CategoryLive, :submitted, as: Bonfire.Classify.Category)
-        live("/+:username/:tab", CategoryLive, as: Bonfire.Classify.Category)
-        live("/+:username/:tab/:tab_id", CategoryLive, as: Bonfire.Classify.Category)
+        live("/+:username/follow", CategoryLive, :follow, as: Bonfire.Classify.Category)
+
         # note: order matters for Voodoo!
 
         live("/topics", CategoriesLive, as: Bonfire.Classify.Category)
@@ -38,6 +36,12 @@ defmodule Bonfire.UI.Topics.Routes do
       scope "/", Bonfire.UI.Topics do
         pipe_through(:browser)
         pipe_through(:user_required)
+
+        live("/+:username/settings", CategoryLive, :settings, as: Bonfire.Classify.Category)
+        live("/+:username/submitted", CategoryLive, :submitted, as: Bonfire.Classify.Category)
+        live("/+:username/followers", CategoryLive, :followers, as: Bonfire.Classify.Category)
+        live("/+:username/:tab", CategoryLive, as: Bonfire.Classify.Category)
+        live("/+:username/:tab/:tab_id", CategoryLive, as: Bonfire.Classify.Category)
       end
     end
   end

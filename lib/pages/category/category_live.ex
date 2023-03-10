@@ -15,8 +15,20 @@ defmodule Bonfire.UI.Topics.CategoryLive do
       Bonfire.UI.Common.LivePlugs.StaticChanged,
       Bonfire.UI.Common.LivePlugs.Csrf,
       Bonfire.UI.Common.LivePlugs.Locale,
-      &Bonfire.Classify.LiveHandler.mounted/3
+      &mounted/3
     ])
+  end
+
+  defp mounted(params, session, socket) do
+    with {:ok, socket} <- Bonfire.Classify.LiveHandler.mounted(params, session, socket) do
+      {:ok,
+       assign(
+         socket,
+         page: "topic",
+         showing_within: :topic
+         #  nav_items: Bonfire.Common.ExtensionModule.default_nav(:bonfire_ui_social)
+       )}
+    end
   end
 
   def tab(selected_tab) do
