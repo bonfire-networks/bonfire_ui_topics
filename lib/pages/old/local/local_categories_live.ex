@@ -30,8 +30,7 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
        create_object_type: :category,
        smart_input_opts: %{prompt: l("Create a topic")},
        loading: false,
-       smart_input: nil,
-       smart_input_opts: %{}
+       smart_input: nil
      )}
   end
 
