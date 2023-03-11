@@ -4,7 +4,7 @@ defmodule Bonfire.UI.Topics.SettingsLive do
 
   prop selected_tab, :any, default: nil
   prop tab_id, :any, default: nil
-  prop topic, :any, required: true
+  prop category, :any, required: true
   prop permalink, :any, required: true
   prop object_boundary, :any, default: nil
 

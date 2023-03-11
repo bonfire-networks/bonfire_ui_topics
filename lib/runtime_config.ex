@@ -34,7 +34,7 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
           ],
           navigation: [
             nil: l("General"),
-            membership: l("Members"),
+            # membership: l("Members"),
             moderation: l("Moderation")
           ]
         ]
