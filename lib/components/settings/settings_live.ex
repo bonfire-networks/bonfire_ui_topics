@@ -1,6 +1,5 @@
 defmodule Bonfire.UI.Topics.SettingsLive do
   use Bonfire.UI.Common.Web, :stateless_component
-  import Bonfire.UI.Me.Integration
 
   prop selected_tab, :any, default: nil
   prop tab_id, :any, default: nil
