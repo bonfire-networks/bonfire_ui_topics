@@ -5,21 +5,9 @@ defmodule Bonfire.UI.Topics.CategoryLive do
   alias Bonfire.Classify.Web.CommunityLive.CommunityCollectionsLive
   alias Bonfire.Classify.Web.CollectionLive.CollectionResourcesLive
 
-  alias Bonfire.UI.Me.LivePlugs
+  on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.LoadCurrentUser]}
 
   def mount(params, session, socket) do
-    live_plug(params, session, socket, [
-      LivePlugs.LoadCurrentAccount,
-      LivePlugs.LoadCurrentUser,
-      # LivePlugs.LoadCurrentUserCircles,
-      Bonfire.UI.Common.LivePlugs.StaticChanged,
-      Bonfire.UI.Common.LivePlugs.Csrf,
-      Bonfire.UI.Common.LivePlugs.Locale,
-      &mounted/3
-    ])
-  end
-
-  defp mounted(params, session, socket) do
     with {:ok, socket} <- Bonfire.Classify.LiveHandler.mounted(params, session, socket) do
       {:ok,
        assign(

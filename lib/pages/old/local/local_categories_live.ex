@@ -1,6 +1,6 @@
 defmodule Bonfire.UI.Topics.LocalCategoriesLive do
   use Bonfire.UI.Common.Web, :stateful_component
-  alias Bonfire.UI.Me.LivePlugs
+
   alias Bonfire.Me.Users
 
   declare_nav_link(l("Local topics"),
