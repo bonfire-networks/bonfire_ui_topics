@@ -28,7 +28,7 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
        feed_title: l("Published in all known topics"),
        limit: limit,
        create_object_type: :category,
-       smart_input_opts: %{prompt: l("Create a topic")},
+      #  smart_input_opts: %{prompt: l("Create a topic")},
        loading: false,
        smart_input: nil
      )}
