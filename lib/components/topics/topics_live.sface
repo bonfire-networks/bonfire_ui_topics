@@ -9,7 +9,7 @@
       <div class="w-16 h-16 rounded-l">
         {#case Media.avatar_url(@category)}
           {#match "/images/avatar.png"}
-            <Icon iconify="mdi:message-plus" class="w-14 h-14 text-base-content/70" />
+            <#Icon iconify="mdi:message-plus" class="w-14 h-14 text-base-content/70" />
           {#match url}
             <LazyImage src={url} />
         {/case}
