@@ -1,5 +1,6 @@
 <main
   data-id="topic"
+  id={"topic-#{e(@category, :id, "")}"}
   data-topic-id={e(@category, :id, "")}
   class={
     "": !@current_user
