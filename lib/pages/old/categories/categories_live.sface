@@ -6,7 +6,7 @@
     <Dynamic.Component
       module={Bonfire.UI.Social.FeedLive}
       id={@feed_component_id}
-      feed_id={"feed:topic:#{@selected_tab}"}
+      feed_id={"topic-#{@selected_tab}"}
       page_title={@page_title}
       page={@page}
       hide_tabs
