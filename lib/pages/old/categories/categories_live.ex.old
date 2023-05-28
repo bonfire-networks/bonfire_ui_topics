@@ -78,7 +78,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
      )
      # FIXME: better pagination
      |> assign(
-       Bonfire.Social.Feeds.LiveHandler.feed_assigns_maybe_async(
+       Bonfire.Social.Feeds.LiveHandler.feed_default_assigns(
          Bonfire.Social.Feeds.feed_ids(:outbox, followed_categories),
          socket
        )
@@ -109,7 +109,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
        limit: limit
      )
      |> assign(
-       Bonfire.Social.Feeds.LiveHandler.feed_assigns_maybe_async(
+       Bonfire.Social.Feeds.LiveHandler.feed_default_assigns(
          Bonfire.Tag.Tagged.q_with_type(Bonfire.Classify.Category),
          socket
        )
