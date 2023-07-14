@@ -3,6 +3,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
 
   declare_extension("Topics",
     icon: "emojione:books",
+    emoji: "📚",
     default_nav: [
       Bonfire.UI.Topics.CategoriesLive,
       Bonfire.UI.Groups.SidebarGroupsLive
