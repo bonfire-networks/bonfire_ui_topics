@@ -16,13 +16,13 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
     config :bonfire, :ui,
       topic: [
         sections: [
-          timeline: Bonfire.UI.Social.ProfileTimelineLive,
+          nil: Bonfire.UI.Social.ProfileTimelineLive,
           settings: Bonfire.UI.Topics.SettingsLive,
           followers: Bonfire.UI.Social.ProfileFollowsLive,
           follow: Bonfire.UI.Me.RemoteInteractionFormLive
         ],
         navigation: [
-          timeline: l("Timeline"),
+          nil: l("Timeline"),
           followers: l("Followers")
         ],
         network: [],
