@@ -82,7 +82,6 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
          Bonfire.Social.Feeds.feed_ids(:outbox, followed_categories),
          socket
        )
-       |> debug("feed_assigns_maybe_async")
      )}
   end
 
@@ -113,7 +112,6 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
          Bonfire.Tag.Tagged.q_with_type(Bonfire.Classify.Category),
          socket
        )
-       |> debug("feed_assigns_maybe_async")
      )}
   end
 
