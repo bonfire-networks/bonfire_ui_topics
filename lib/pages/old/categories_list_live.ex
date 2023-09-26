@@ -8,8 +8,7 @@ defmodule Bonfire.UI.Topics.CategorieListLive do
   end
 
   def render(assigns) do
-    ~L"""
-
+    ~H"""
     <%= live_component(
       @socket,
       Bonfire.Classify.Web.InstanceLive.InstanceCategoriesLive,
@@ -24,10 +23,9 @@ defmodule Bonfire.UI.Topics.CategorieListLive do
       current_user: current_user(assigns)
     ) %>
 
-
     <%= live_component(
       @socket,
-      Bonfire.Classify.Web.My.NewCategoryLive ,
+      Bonfire.Classify.Web.My.NewCategoryLive,
       # selected_tab: @selected_tab,
       id: :new_category,
       toggle_category: true,
