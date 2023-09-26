@@ -1,4 +1,4 @@
-<!-- <Bonfire.UI.Common.PageTitleLive page_title={@page_title} /> -->
+{!-- <Bonfire.UI.Common.PageTitleLive page_title={@page_title} /> --}
 <Bonfire.Classify.Web.TopicsNavLive id={:navigation} />
 <div class="max-w-screen-lg grid-cols-1 pt-12 mx-3 text-2xl font-medium md:mx-auto text-base-content/90">{l("Latest from topics")}</div>
 <div class="grid pt-6 mb-4 mx-3 md:mx-auto max-w-screen-lg grid-cols-1 tablet:grid-cols-[680px_1fr] gap-4">

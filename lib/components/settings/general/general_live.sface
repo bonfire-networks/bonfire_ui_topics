@@ -33,10 +33,10 @@
         >{e(@category, :profile, :summary, nil)}</textarea>
       </div>
 
-      <!-- <div class="w-full form-control">
+      {!-- <div class="w-full form-control">
     <select name="to_boundaries[]" class="select select-bordered">
     </select>
-  </div> -->
+  </div> --}
 
       <button type="submit" class="w-full mt-3 normal-case btn btn-primary">
         {l("Edit")}

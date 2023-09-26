@@ -40,11 +40,11 @@
         <select name="to_boundaries" class="w-full select select-bordered">
           <option value="" selected>Standard: inherits the boundaries of the group</option>
           <option value="annoucement" disabled>Announcements: Only group caretakers can post</option>
-          <!-- <option>Public: Anyone can post</option> -->
+          {!-- <option>Public: Anyone can post</option> --}
         </select>
       </div>
 
-      <!-- <div class="w-full rounded form-control bg-base-content/5">
+      {!-- <div class="w-full rounded form-control bg-base-content/5">
       <div class="p-4">
         <div class="flex items-center justify-between gap-6">
           <div class="flex flex-col gap-1">
@@ -58,7 +58,7 @@
           />
         </div>
       </div>
-    </div> -->
+    </div> --}
 
       <input type="hidden" name="context_id" value={id(@parent)}>
 
