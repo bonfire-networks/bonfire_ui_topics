@@ -39,6 +39,8 @@
         before: [],
         pagination_target: "#collection-activities"
       ) %>
+
+
     </div>
   <% end %>
 
@@ -60,11 +62,11 @@
   </div>
 </div>
 
-<%= live_component(
-  @socket,
-  Bonfire.Classify.Web.My.NewCategoryLive,
-  # selected_tab: @selected_tab,
-  id: :new_category,
-  toggle_category: true,
-  current_user: current_user(@__context__)
-) %>
+
+   <.live_component 
+  module={Bonfire.Classify.Web.My.NewCategoryLive} 
+  id={:new_category} 
+  toggle_category={true} 
+
+  current_user={current_user(assigns)} 
+   />
