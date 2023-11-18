@@ -1,4 +1,7 @@
 {#if module_enabled?(Bonfire.UI.Social.FeedLive)}
+  {!-- 
+      TODO: support LivePush:
+      ComponentID.new(Bonfire.UI.Social.FeedLive, @feed_ids || @feed_id, __MODULE__) --}
   <Dynamic.Component
     module={Bonfire.UI.Social.FeedLive}
     id={e(@feed_id, :flags)}
