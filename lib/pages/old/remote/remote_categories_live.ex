@@ -56,7 +56,7 @@ defmodule Bonfire.UI.Topics.RemoteCategoriesLive do
     limit = e(socket.assigns, :limit, 10)
 
     categories =
-      Bonfire.Social.Follows.list_my_followed(current_user_required!(socket),
+      Bonfire.Social.Graph.Follows.list_my_followed(current_user_required!(socket),
         limit: limit,
         after: e(attrs, "after", nil),
         type: Bonfire.Classify.Category

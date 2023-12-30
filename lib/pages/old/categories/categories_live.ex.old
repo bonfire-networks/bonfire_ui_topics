@@ -56,7 +56,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
     if is_nil(current_user), do: raise(Bonfire.Fail.Auth, :needs_login)
 
     followed =
-      Bonfire.Social.Follows.list_my_followed(current_user,
+      Bonfire.Social.Graph.Follows.list_my_followed(current_user,
         pagination: %{limit: 500},
         type: Bonfire.Classify.Category
       )
@@ -149,7 +149,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
   #   limit = e(socket.assigns, :limit, 10)
 
   #   categories =
-  #     Bonfire.Social.Follows.list_my_followed(current_user_required!(socket),
+  #     Bonfire.Social.Graph.Follows.list_my_followed(current_user_required!(socket),
   #       limit: limit,
   #       after: e(attrs, "after", nil),
   #       type: Bonfire.Classify.Category
