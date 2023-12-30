@@ -4,11 +4,11 @@
   tabs={Config.get([:ui, :topic, :settings, :navigation], settings: l("General"))}
 />
 
-<Dynamic.Component
+<StatelessComponent
   module={Config.get(
     [:ui, :topic, :settings, :sections, tab(@tab_id || @selected_tab)],
     Bonfire.UI.Topics.Settings.GeneralLive
   )}
   {...assigns}
 >
-</Dynamic.Component>
+</StatelessComponent>

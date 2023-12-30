@@ -1,23 +1,24 @@
 <div class="">
-  {#if module_enabled?(Bonfire.UI.Social.Activity.CategoryLive)}
-    <Dynamic.Component module={Bonfire.UI.Social.Activity.CategoryLive} object={@category} />
-  {#else}
-    <LiveRedirect
-      to={path(@category)}
-      class="flex gap-1 rounded shadow-xl cursor-pointer bg-base-content/5 hover:bg-base-content/10"
-    >
-      <div class="w-16 h-16 rounded-l">
-        {#case Media.avatar_url(@category)}
-          {#match "/images/avatar.png"}
-            <#Icon iconify="mdi:message-plus" class="w-14 h-14 text-base-content/70" />
-          {#match url}
-            <LazyImage src={url} />
-        {/case}
-      </div>
-      <span class="p-2 text-sm font-medium truncate text-base-content/90">{e(@category, :profile, :name, nil)}</span>
-      <span class="p-2 text-xs font-medium truncate text-base-content/70">{e(@category, :profile, :summary, nil)}</span>
-    </LiveRedirect>
-  {/if}
+  {#case maybe_module(Bonfire.UI.Social.Activity.CategoryLive, @__context__)}
+    {#match nil}
+      <LiveRedirect
+        to={path(@category)}
+        class="flex gap-1 rounded shadow-xl cursor-pointer bg-base-content/5 hover:bg-base-content/10"
+      >
+        <div class="w-16 h-16 rounded-l">
+          {#case Media.avatar_url(@category)}
+            {#match "/images/avatar.png"}
+              <#Icon iconify="mdi:message-plus" class="w-14 h-14 text-base-content/70" />
+            {#match url}
+              <LazyImage src={url} />
+          {/case}
+        </div>
+        <span class="p-2 text-sm font-medium truncate text-base-content/90">{e(@category, :profile, :name, nil)}</span>
+        <span class="p-2 text-xs font-medium truncate text-base-content/70">{e(@category, :profile, :summary, nil)}</span>
+      </LiveRedirect>
+    {#match component}
+      <StatelessComponent module={component} object={@category} />
+  {/case}
 
   <ul class="gap-1 my-2 menu" :if={@children && @children != []}>
     <Bonfire.UI.Topics.TopicsLive

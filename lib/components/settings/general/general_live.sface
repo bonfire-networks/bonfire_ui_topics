@@ -2,7 +2,8 @@
   {#if !Bonfire.Classify.ensure_update_allowed(current_user(@__context__), @category)}
     {l("Sorry, you cannot edit this topic.")}
   {#else}
-    <Bonfire.Files.Web.UploadIconLive
+    <StatefulComponent
+      module={maybe_component(Bonfire.Files.Web.UploadIconLive, @__context__)}
       id={:upload_icon}
       class="inline-block w-24 h-24"
       object={@category}

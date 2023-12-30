@@ -6,9 +6,9 @@
     "": !current_user_id(@__context__)
   }
 >
-  <Dynamic.Component
+  <StatelessComponent
     module={Config.get([:ui, :topic, :sections, tab(@selected_tab)], Bonfire.UI.Social.ProfileTimelineLive)}
     {...assigns}
   >
-  </Dynamic.Component>
+  </StatelessComponent>
 </main>

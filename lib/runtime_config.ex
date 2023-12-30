@@ -10,8 +10,8 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
   def config do
     import Config
 
-    config :bonfire_ui_topics,
-      disabled: false
+    # config :bonfire_ui_topics,
+    #   modularity: :disabled
 
     config :bonfire, :ui,
       topic: [

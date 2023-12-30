@@ -2,27 +2,28 @@
 <Bonfire.Classify.Web.TopicsNavLive id={:navigation} />
 <div class="max-w-screen-lg grid-cols-1 pt-12 mx-3 text-2xl font-medium md:mx-auto text-base-content/90">{l("Latest from topics")}</div>
 <div class="grid pt-6 mb-4 mx-3 md:mx-auto max-w-screen-lg grid-cols-1 tablet:grid-cols-[680px_1fr] gap-4">
-  {#if module_enabled?(Bonfire.UI.Social.FeedLive)}
-    {!-- 
+  {#case maybe_module(Bonfire.UI.Social.FeedLive, @__context__)}
+    {#match nil}
+    {#match component}
+      {!-- 
       TODO: support LivePush:
       ComponentID.new(Bonfire.UI.Social.FeedLive, @feed_ids || @feed_id, __MODULE__) --}
-    <Dynamic.Component
-      module={Bonfire.UI.Social.FeedLive}
-      id={@feed_component_id}
-      feed_id={"topic-#{@selected_tab}"}
-      page_title={@page_title}
-      page={@page}
-      hide_tabs
-      feed={@feed}
-      page_info={@page_info}
-      selected_tab={@selected_tab}
-      smart_input_opts={@smart_input_opts}
-      search_placeholder={@search_placeholder}
-      feed_title={@feed_title}
-      loading={@loading}
-    />
-  {#else}
-  {/if}
+      <StatelessComponent
+        module={component}
+        id={@feed_component_id}
+        feed_id={"topic-#{@selected_tab}"}
+        page_title={@page_title}
+        page={@page}
+        hide_tabs
+        feed={@feed}
+        page_info={@page_info}
+        selected_tab={@selected_tab}
+        smart_input_opts={@smart_input_opts}
+        search_placeholder={@search_placeholder}
+        feed_title={@feed_title}
+        loading={@loading}
+      />
+  {/case}
   <div class="flex flex-col gap-4">
     <div class="block rounded-md shadow bg-base-100">
       <div

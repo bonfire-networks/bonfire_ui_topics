@@ -1,7 +1,5 @@
-{#case module_enabled?(Bonfire.UI.Groups.DiscoverGroupsLive)}
-  {#match true}
-    <Dynamic.Component module={Bonfire.UI.Groups.DiscoverGroupsLive} categories={@categories} />
-  {#match _}
+{#case maybe_component(Bonfire.UI.Groups.DiscoverGroupsLive, @__context__)}
+  {#match nil}
     <ul class="gap-1 my-2 menu">
       <Bonfire.UI.Topics.TopicsLive
         :for={{category, children} <- @categories}
@@ -9,4 +7,6 @@
         children={children}
       />
     </ul>
+  {#match component}
+    <StatelessComponent module={component} categories={@categories} />
 {/case}
