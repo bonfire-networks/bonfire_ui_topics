@@ -1,5 +1,5 @@
 <div class="">
-  {#case maybe_module(Bonfire.UI.Social.Activity.CategoryLive, @__context__)}
+  {#case maybe_module(Bonfire.Classify.Web.Preview.CategoryLive, @__context__)}
     {#match nil}
       <LiveRedirect
         to={path(@category)}

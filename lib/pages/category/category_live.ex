@@ -17,7 +17,7 @@ defmodule Bonfire.UI.Topics.CategoryLive do
          socket,
          page: "topic",
          showing_within: :topic
-         #  nav_items: Bonfire.Common.ExtensionModule.default_nav(:bonfire_ui_social)
+         #  nav_items: Bonfire.Common.ExtensionModule.default_nav()
        )}
     end
   end

@@ -18,7 +18,7 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
         sections: [
           nil: Bonfire.UI.Social.ProfileTimelineLive,
           settings: Bonfire.UI.Topics.SettingsLive,
-          followers: Bonfire.UI.Social.ProfileFollowsLive,
+          followers: Bonfire.UI.Social.Graph.ProfileFollowsLive,
           follow: Bonfire.UI.Me.RemoteInteractionFormLive
         ],
         navigation: [
