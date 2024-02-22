@@ -1,7 +1,7 @@
 <div class="">
   {#case maybe_module(Bonfire.Classify.Web.Preview.CategoryLive, @__context__)}
     {#match nil}
-      <LiveRedirect
+      <LinkLive
         to={path(@category)}
         class="flex gap-1 rounded shadow-xl cursor-pointer bg-base-content/5 hover:bg-base-content/10"
       >
@@ -15,7 +15,7 @@
         </div>
         <span class="p-2 text-sm font-medium truncate text-base-content/90">{e(@category, :profile, :name, nil)}</span>
         <span class="p-2 text-xs font-medium truncate text-base-content/70">{e(@category, :profile, :summary, nil)}</span>
-      </LiveRedirect>
+      </LinkLive>
     {#match component}
       <StatelessComponent module={component} object={@category} />
   {/case}

@@ -34,7 +34,7 @@
       </div>
       <div role="tabpanels" class="p-3">
         <section role="tabpanel" class="flex flex-col gap-3">
-          <LiveRedirect
+          <LinkLive
             to={if e(category, :character, :username, nil),
               do: ~p"/+#{e(category, :character, :username, nil)}",
               else: ~p"/labels/#{e(category, :id, nil)}"}
@@ -48,7 +48,7 @@
             <span class="p-2 text-sm font-medium truncate text-base-content/90">
               {e(category, :profile, :name, l("Untitled topic"))}
             </span>
-          </LiveRedirect>
+          </LinkLive>
         </section>
       </div>
     </div>
