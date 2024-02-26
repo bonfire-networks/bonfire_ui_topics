@@ -34,7 +34,7 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
      )}
   end
 
-  def do_handle_event("topics:load_more", attrs, socket) do
+  def handle_event("topics:load_more", attrs, socket) do
     # debug(attrs)
     limit = e(socket.assigns, :limit, 10)
 
@@ -54,7 +54,7 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
      )}
   end
 
-  def do_handle_event("topics_followed:load_more", attrs, socket) do
+  def handle_event("topics_followed:load_more", attrs, socket) do
     limit = e(socket.assigns, :limit, 10)
 
     categories =
@@ -78,18 +78,4 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
        page_info: e(categories, :page_info, [])
      )}
   end
-
-  def handle_event(
-        action,
-        attrs,
-        socket
-      ),
-      do:
-        Bonfire.UI.Common.LiveHandlers.handle_event(
-          action,
-          attrs,
-          socket,
-          __MODULE__,
-          &do_handle_event/3
-        )
 end
