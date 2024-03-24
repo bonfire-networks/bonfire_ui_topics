@@ -4,6 +4,7 @@ defmodule Bonfire.UI.Topics.CategoriesLive do
   declare_extension("Topics",
     icon: "emojione:books",
     emoji: "📚",
+    description: l("Organise content and discussions according to topics."),
     default_nav: [
       Bonfire.UI.Topics.CategoriesLive,
       Bonfire.UI.Groups.SidebarGroupsLive
