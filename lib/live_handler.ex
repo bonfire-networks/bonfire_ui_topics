@@ -7,11 +7,11 @@ defmodule Bonfire.UI.Topics.LiveHandler do
     |> Bonfire.Classify.LiveHandler.new(:topic, ..., socket)
   end
 
-  def handle_event("autocomplete", %{"input" => input}, socket) do
+  def handle_event("autocomplete", %{"input" => input}, _socket) do
     # TODO?
   end
 
-  def handle_event("edit", attrs, socket) do
+  def handle_event("edit", _attrs, _socket) do
     # TODO?
   end
 end
