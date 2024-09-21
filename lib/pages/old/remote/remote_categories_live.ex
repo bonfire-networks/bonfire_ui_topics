@@ -14,7 +14,7 @@ defmodule Bonfire.UI.Topics.RemoteCategoriesLive do
     {:ok, categories} =
       Bonfire.Classify.GraphQL.CategoryResolver.categories_toplevel(
         %{limit: limit},
-        %{context: %{current_user: current_user(socket.assigns)}}
+        %{context: %{current_user: current_user(assigns(socket))}}
       )
 
     {:ok,
@@ -34,12 +34,12 @@ defmodule Bonfire.UI.Topics.RemoteCategoriesLive do
 
   def handle_event("topics:load_more", attrs, socket) do
     # debug(attrs)
-    limit = e(socket.assigns, :limit, 10)
+    limit = e(assigns(socket), :limit, 10)
 
     {:ok, categories} =
       Bonfire.Classify.GraphQL.CategoryResolver.categories_toplevel(
         %{limit: limit, after: [e(attrs, "after", nil)]},
-        %{context: %{current_user: current_user(socket.assigns)}}
+        %{context: %{current_user: current_user(assigns(socket))}}
       )
 
     # |> debug()
@@ -47,13 +47,13 @@ defmodule Bonfire.UI.Topics.RemoteCategoriesLive do
     {:noreply,
      assign(
        socket,
-       categories: e(socket.assigns, :categories, []) ++ e(categories, :edges, []),
+       categories: e(assigns(socket), :categories, []) ++ e(categories, :edges, []),
        page_info: e(categories, :page_info, [])
      )}
   end
 
   def handle_event("topics_followed:load_more", attrs, socket) do
-    limit = e(socket.assigns, :limit, 10)
+    limit = e(assigns(socket), :limit, 10)
 
     categories =
       Bonfire.Social.Graph.Follows.list_my_followed(current_user_required!(socket),
@@ -72,7 +72,7 @@ defmodule Bonfire.UI.Topics.RemoteCategoriesLive do
     {:noreply,
      assign(
        socket,
-       categories: e(socket.assigns, :categories, []) ++ page,
+       categories: e(assigns(socket), :categories, []) ++ page,
        page_info: e(categories, :page_info, [])
      )}
   end
