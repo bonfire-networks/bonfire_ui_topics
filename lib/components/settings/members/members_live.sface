@@ -1,1 +1,4 @@
-<StatelessComponent module={maybe_component(Bonfire.UI.Me.MembersLive, @__context__)}  users={@users} />
+<StatelessComponent
+  module={maybe_component(Bonfire.UI.Me.MembersLive, @__context__)}
+  users={@users}
+/>
