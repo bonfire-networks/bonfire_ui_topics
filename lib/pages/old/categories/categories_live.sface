@@ -14,7 +14,7 @@
         feed_id={"topic-#{@selected_tab}"}
         page_title={@page_title}
         page={@page}
-        hide_tabs
+        hide_filters
         feed={@feed}
         page_info={@page_info}
         selected_tab={@selected_tab}

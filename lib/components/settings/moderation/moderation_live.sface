@@ -10,5 +10,5 @@
   page_info={@page_info}
   showing_within={:flags}
   loading={@loading}
-  hide_tabs
+  hide_filters
 />
