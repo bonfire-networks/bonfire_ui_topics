@@ -85,7 +85,7 @@ defmodule Bonfire.UI.Topics.TagMentionsTest do
 
     debug_my_grants_on(mentioned, mention)
 
-    assert %{edges: feed} = FeedActivities.feed(:outbox, current_user: mentioned)
+    assert %{edges: feed} = FeedActivities.feed(:user_activities, current_user: mentioned)
 
     assert %{} = fp = List.first(feed)
     assert fp.activity.object_id == mention.id
