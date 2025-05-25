@@ -14,7 +14,7 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
     {:ok, categories} =
       Bonfire.Classify.GraphQL.CategoryResolver.categories_toplevel(
         %{limit: limit},
-        %{context: %{current_user: current_user(assigns(socket))}}
+        %{context: %{current_user: current_user(socket)}}
       )
 
     {:ok,
@@ -41,7 +41,7 @@ defmodule Bonfire.UI.Topics.LocalCategoriesLive do
     {:ok, categories} =
       Bonfire.Classify.GraphQL.CategoryResolver.categories_toplevel(
         %{limit: limit, after: [e(attrs, "after", nil)]},
-        %{context: %{current_user: current_user(assigns(socket))}}
+        %{context: %{current_user: current_user(socket)}}
       )
 
     # |> debug()
