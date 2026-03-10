@@ -72,9 +72,12 @@
     </Form>
   </div>
   <:open_btn>
-    <button type="button" class="flex items-center gap-2 text-sm text-base-content/70">
-      <#Icon iconify="mdi:plus" class="w-4 h-4 shrink-0" />
-      <span :if={@label}>{@label}</span>
-    </button>
+    <div
+      type="button"
+      class="flex items-center gap-2 justify-between text-base-content"
+    >
+      <span class="text-sm font-medium">{l("New Topic")}</span>
+      <#Icon iconify="ph:chats-circle-duotone" class="w-5 h-5 shrink-0" />
+    </div>
   </:open_btn>
 </Bonfire.UI.Common.OpenModalLive>

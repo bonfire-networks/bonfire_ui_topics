@@ -1,26 +1,59 @@
 <div class="">
-  {#case maybe_module(Bonfire.Classify.Web.Preview.CategoryLive, @__context__)}
-    {#match nil}
-      <LinkLive
-        to={path(@category)}
-        class="flex gap-1 rounded shadow-xl cursor-pointer bg-base-content/5 hover:bg-base-content/10"
-      >
-        <div class="w-16 h-16 rounded-l">
-          {#case Media.avatar_url(@category)}
-            {#match "/images/avatar.png"}
-              <#Icon iconify="mdi:message-plus" class="w-14 h-14 text-base-content/70" />
-            {#match url}
-              <LazyImage src={url} />
-          {/case}
-        </div>
-        <span class="p-2 text-sm font-medium truncate text-base-content/90">{e(@category, :profile, :name, nil)}</span>
-        <span class="p-2 text-xs font-medium truncate text-base-content/70">{e(@category, :profile, :summary, nil)}</span>
-      </LinkLive>
-    {#match component}
-      <StatelessComponent module={component} object={@category} />
-  {/case}
+  <LinkLive
+    to={path(@category)}
+    class="group flex items-center gap-3 p-3 -mx-1 rounded-xl hover:bg-base-content/5 transition-colors"
+  >
+    {!-- Icon --}
+    <div class="flex items-center justify-center w-10 h-10 mt-0.5 rounded-lg bg-base-content/5 shrink-0 group-hover:bg-primary/10 transition-colors">
+      {#case Media.avatar_url(@category)}
+        {#match "/images/avatar.png"}
+          <#Icon iconify="ph:chats-circle-duotone" class="w-5 h-5 text-base-content/40 group-hover:text-primary/70 transition-colors" />
+        {#match url}
+          <LazyImage src={url} class="w-10 h-10 rounded-lg object-cover" />
+      {/case}
+    </div>
 
-  <ul class="gap-1 my-2 menu" :if={@children && @children != []}>
+    {!-- Content --}
+    <div class="flex flex-col flex-1 min-w-0 gap-0.5">
+      <span class="text-base font-semibold text-base-content truncate">
+        {e(@category, :profile, :name, nil) || e(@category, :name, nil)}
+      </span>
+
+      <p
+        :if={e(@category, :profile, :summary, nil)}
+        class="text-xs text-base-content/50 line-clamp-2"
+      >{e(@category, :profile, :summary, nil)}</p>
+
+      {!-- Meta row --}
+      <div class="flex items-center gap-3 mt-1">
+        <span
+          :if={e(@category, :character, :follow_count, :object_count, 0) > 0}
+          class="flex items-center gap-1 text-xs text-base-content/40"
+        >
+          <#Icon iconify="ph:users-duotone" class="w-3.5 h-3.5" />
+          {e(@category, :character, :follow_count, :object_count, 0)}
+        </span>
+        <span
+          :if={e(@category, :tree, :direct_children_count, 0) > 0}
+          class="flex items-center gap-1 text-xs text-base-content/40"
+        >
+          <#Icon iconify="ph:chats-circle-duotone" class="w-3.5 h-3.5" />
+          {e(@category, :tree, :direct_children_count, 0)}
+        </span>
+      </div>
+    </div>
+
+    {!-- Follow action --}
+    <div :if={current_user_id(@__context__)} class="shrink-0 ml-auto self-center" phx-click="stop_propagation">
+      <Bonfire.Classify.Web.CategoryActionsLive
+        object={@category}
+        object_type={:topic}
+      />
+    </div>
+  </LinkLive>
+
+  {!-- Subtopics --}
+  <ul class="ml-6 pl-4 border-l border-base-content/10" :if={@children && @children != []}>
     <Bonfire.UI.Topics.TopicsLive
       :for={{subcategory, subchildren} <- @children}
       category={subcategory}
