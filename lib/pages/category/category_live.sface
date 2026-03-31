@@ -11,5 +11,14 @@
       Bonfire.UI.Social.ProfileTimelineLive}
     {...assigns}
   >
+    <:header>
+      <StatelessComponent
+        module={maybe_component(Bonfire.UI.Topics.TopicHeroLive, @__context__)}
+        category={@category}
+        permalink={@permalink}
+        object_boundary={@object_boundary}
+        boundary_preset={@boundary_preset}
+      />
+    </:header>
   </StatelessComponent>
 </main>
