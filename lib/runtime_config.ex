@@ -22,6 +22,7 @@ defmodule Bonfire.UI.Topics.RuntimeConfig do
           follow: Bonfire.UI.Me.RemoteInteractionFormLive
         ],
         navigation: [
+          discussions: l("Discussions"),
           nil: l("Timeline"),
           followers: l("Followers")
         ],
