@@ -12,6 +12,32 @@
     {...assigns}
   >
     <:header>
+      {#if e(@category, :parent_category, nil)}
+        <StatefulComponent
+          module={Config.get(
+            [:ui, :group, :hero_component],
+            Bonfire.UI.Me.ProfileHeroFullLive
+          )}
+          id={deterministic_dom_id(
+            "profile_hero_group",
+            id(e(@category, :parent_category, nil)),
+            @selected_tab
+          )}
+          user={e(@category, :parent_category, nil)}
+          path={path(e(@category, :parent_category, nil))}
+          character_type={:group}
+          boundary_preset={@boundary_preset}
+          object_boundary={@object_boundary}
+          permalink={path(e(@category, :parent_category, nil))}
+          follows_me={false}
+          selected_tab={@selected_tab}
+          members={e(assigns, :members, [])}
+          moderators={e(assigns, :moderators, [])}
+          subcategories={e(assigns, :subcategories, [])}
+          selected_category_id={id(@category)}
+        />
+      {/if}
+
       <StatelessComponent
         module={maybe_component(Bonfire.UI.Topics.TopicHeroLive, @__context__)}
         category={@category}

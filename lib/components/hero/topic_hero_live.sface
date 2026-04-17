@@ -1,88 +1,34 @@
-{#case Media.banner_url(e(@category, :parent_category, nil)) || Media.banner_url(@category)}
-  {#match banner_url}
-    <section
-      data-id="topic_hero"
-      aria-label={l("Topic")}
-      class="relative overflow-hidden mb-3 bonfire-wrapper"
-    >
-      <div class="relative px-4 pt-4 pb-4">
-        {!-- Parent group breadcrumb --}
-        <LinkLive
-          :if={e(@category, :parent_category, :id, nil)}
-          to={path(e(@category, :parent_category, nil))}
-          class="group inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide uppercase badge badge-lg badge-neutral mb-3"
-        >
-          <#Icon
-            iconify="ph:users-three-duotone"
-            class="size-4 opacity-60 group-hover:opacity-100 transition-opacity"
-          />
-          <span>{e(@category, :parent_category, :profile, :name, nil) ||
-              e(@category, :parent_category, :name, l("Group"))}</span>
-          <!-- <#Icon iconify="ph:caret-right" class="size-4 opacity-40 -translate-x-0.5 group-hover:translate-x-0 transition-transform duration-200" /> -->
-        </LinkLive>
+<section
+  data-id="topic_subheader"
+  aria-label={e(@category, :profile, :name, l("Topic"))}
+  class="pb-4"
+>
+  <div class="flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 min-w-0 flex-1">
+      
+      <#Icon iconify="ph:hash-duotone" class="h-6 w-6 text-primary" />
 
-        <div class="flex items-center justify-between gap-4">
-          <div class="flex items-center gap-4 min-w-0">
-            <div>
-              {#if !Settings.get([Bonfire.UI.Common.AvatarLive, :hide_avatars], false, @__context__)}
-                <Bonfire.UI.Common.AvatarLive
-                  parent_id="topic-hero"
-                  title={e(@category, :profile, :name, l("Topic"))}
-                  class="inline-block object-cover w-14 h-14 rounded flex-shrink-0 ring-2 ring-base-content/10 ring-offset-2 ring-offset-base-100"
-                  user_id={id(@category)}
-                  fallback_class="w-14 h-14"
-                  src={Media.image_url(@category) || Media.avatar_url(@category)}
-                />
-              {/if}
-            </div>
-            <div class="min-w-0 flex flex-col">
-              <h2 class="text-lg font-extrabold tracking-tight text-base-content leading-tight">
-                {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
-              </h2>
-              <span
-                :if={e(@category, :character, :username, nil)}
-                class="text-sm font-medium text-base-content/40 select-all"
-              >+{e(@category, :character, :username, "")}</span>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <StatefulComponent
-              module={maybe_component(Bonfire.UI.Social.Graph.FollowButtonLive, @__context__)}
-              :if={not is_nil(e(@category, :character, nil)) and current_user_id(@__context__)}
-              id={ComponentID.new(Bonfire.UI.Social.Graph.FollowButtonLive, id(@category), __MODULE__)}
-              object_id={uid(@category)}
-              object={@category}
-              path={@permalink}
-              hide_icon
-              class="btn btn-sm btn-soft btn-primary"
-            />
-
-            <Bonfire.UI.Common.SmartInputButtonLive
-              :if={current_user_id(@__context__)}
-              prompt={l("Write in topic")}
-              without_icon
-              smart_input_opts={%{
-                context_id: id(@category),
-                mentions: [id(@category)],
-                to_boundaries: [
-                  {:clone_context,
-                   e(@category, :profile, :name, nil) || e(@category, :character, :username, l("Topic"))}
-                ],
-                to_circles: [
-                  {id(@category),
-                   e(@category, :profile, :name, nil) || e(@category, :character, :username, l("Topic"))}
-                ]
-              }}
-              class="btn btn-sm btn-primary"
-            />
-          </div>
-        </div>
-
-        <p
-          :if={String.length(e(@category, :profile, :summary, "")) > 0}
-          class="mt-3 ml-[72px] text-sm leading-relaxed text-base-content/50 line-clamp-2"
-        >{e(@category, :profile, :summary, "")}</p>
+      <div class="min-w-0 flex-1">
+        <h2 class="text-base font-bold tracking-tight text-base-content leading-tight truncate">
+          {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
+        </h2>
       </div>
-    </section>
-{/case}
+    </div>
+
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <StatefulComponent
+        module={maybe_component(Bonfire.UI.Social.Graph.FollowButtonLive, @__context__)}
+        :if={not is_nil(e(@category, :character, nil)) and current_user_id(@__context__)}
+        id={ComponentID.new(Bonfire.UI.Social.Graph.FollowButtonLive, id(@category), __MODULE__)}
+        object_id={uid(@category)}
+        object={@category}
+        path={@permalink}
+        title={l("Show or hide this topic in your feed")}
+        container_class="inline-flex items-center"
+        class="btn btn-sm btn-ghost btn-circle"
+        hide_text
+        icon_class="w-5 h-5"
+      />
+    </div>
+  </div>
+</section>
