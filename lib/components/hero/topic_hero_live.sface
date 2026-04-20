@@ -28,6 +28,13 @@
         hide_text
         icon_class="w-5 h-5"
       />
+
+      <StatelessComponent
+        module={maybe_component(Bonfire.UI.Groups.ComposeInCategoryLive, @__context__)}
+        :if={current_user_id(@__context__)}
+        prompt={l("Write in topic")}
+        category={@category}
+      />
     </div>
   </div>
 </section>

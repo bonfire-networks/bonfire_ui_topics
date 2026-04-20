@@ -22,10 +22,12 @@ defmodule Bonfire.UI.Topics.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import Phoenix.LiveViewTest
+      import Phoenix.LiveViewTest, except: [open_browser: 1, open_browser: 2]
+      import PhoenixTest
+      import Bonfire.UI.Common.Testing.Helpers
       # import Bonfire.Classify.ConnCase
-      import Bonfire.Classify.Test.ConnHelpers
-      import Bonfire.Classify.Test.Faking
+      import Bonfire.UI.Topics.Test.ConnHelpers
+      # import Bonfire.Classify.Test.Faking
       import Bonfire.Classify.Simulate
 
       alias Bonfire.Classify.Fake
