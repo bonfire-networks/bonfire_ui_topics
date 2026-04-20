@@ -45,6 +45,12 @@
         object_boundary={@object_boundary}
         boundary_preset={@boundary_preset}
       />
+
+      <StatelessComponent
+        module={maybe_component(Bonfire.UI.Common.InlineComposerPlaceholderLive, @__context__)}
+        category={@category}
+        selected_tab={@selected_tab}
+      />
     </:header>
   </StatelessComponent>
 </main>

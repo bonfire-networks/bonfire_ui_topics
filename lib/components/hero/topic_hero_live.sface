@@ -24,16 +24,8 @@
         path={@permalink}
         title={l("Show or hide this topic in your feed")}
         container_class="inline-flex items-center"
-        class="btn btn-sm btn-ghost btn-circle"
-        hide_text
-        icon_class="w-5 h-5"
-      />
-
-      <StatelessComponent
-        module={maybe_component(Bonfire.UI.Groups.ComposeInCategoryLive, @__context__)}
-        :if={current_user_id(@__context__)}
-        prompt={l("Write in topic")}
-        category={@category}
+        class="btn btn-sm btn-soft"
+        hide_icon
       />
     </div>
   </div>
