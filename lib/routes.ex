@@ -16,11 +16,8 @@ defmodule Bonfire.UI.Topics.Routes do
         live("/topics", CategoriesLive, as: Bonfire.Classify.Category)
         live("/topics/:tab", CategoriesLive)
 
-        live("/categories", CategoriesLive)
-        live("/categories/:tab", CategoriesLive)
-
-        live("/category/:id", CategoryLive)
-        live("/category/:id/:tab", CategoryLive)
+        live("/topic/:id", CategoryLive)
+        live("/topic/:id/:tab", CategoryLive)
       end
 
       # pages you need an account to view
