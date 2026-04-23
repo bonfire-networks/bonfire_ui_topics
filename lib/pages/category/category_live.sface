@@ -49,8 +49,8 @@
       <StatelessComponent
         module={maybe_component(Bonfire.UI.Common.InlineComposerPlaceholderLive, @__context__)}
         selected_tab={@selected_tab}
-        prompt={l("Share something in %{name}",
-          name: Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("group"))
+        prompt={l("Write in %{name}",
+          name: Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("topic"))
         )}
         smart_input_opts={%{
           context_id: id(@category),
