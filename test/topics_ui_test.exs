@@ -12,9 +12,16 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
       "to_circles" => [topic_id]
     }
 
+    # The topic page renders an `inline_composer_placeholder` div whose
+    # `phx-click` opens the global composer with the topic context prefilled.
+    # The visible button (`[data-role=composer_button]`) just shows a generic
+    # "Compose", so we trigger the placeholder directly.
     session
-    |> click_button("[data-role=composer_button]", "Write in topic")
     |> PhoenixTest.unwrap(fn view ->
+      view
+      |> Phoenix.LiveViewTest.element("#inline_composer_placeholder")
+      |> Phoenix.LiveViewTest.render_click()
+
       view
       |> Phoenix.LiveViewTest.element("#smart_input_form")
       |> Phoenix.LiveViewTest.render_submit(params)
@@ -44,11 +51,19 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
 
     conn = conn(user: me, account: account)
 
+    # Use /dashboard rather than "/" — the latter redirects via HomeLive's
+    # pre_mount and PhoenixTest occasionally lands us back on the login form
+    # before the redirect is followed.
     conn
-    |> visit("/")
+    |> visit("/dashboard")
     |> wait_async()
     |> PhoenixTest.unwrap(fn view ->
-      Phoenix.LiveViewTest.element(view, "#smart_input_form")
+      view
+      |> Phoenix.LiveViewTest.element("#main_smart_input_button")
+      |> Phoenix.LiveViewTest.render_click()
+
+      view
+      |> Phoenix.LiveViewTest.element("#smart_input_form")
       |> Phoenix.LiveViewTest.render_submit(%{
         "post" => %{
           "post_content" => %{
