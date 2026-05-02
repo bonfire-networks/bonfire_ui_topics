@@ -80,6 +80,32 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
     |> assert_has_or_open_browser("a", text: topic.character.username)
   end
 
+  test "topic feed excludes activities from sibling topics in the same group" do
+    account = fake_account!()
+    me = fake_user!(account)
+
+    group = fake_group!(me)
+    topic_a = fake_category!(me, group, %{name: "Alpha topic"})
+    topic_b = fake_category!(me, group, %{name: "Beta topic"})
+
+    fake_post_in_topic!(me, topic_a, "<p>Post about alpha</p>")
+    fake_post_in_topic!(me, topic_b, "<p>Post about beta</p>")
+
+    conn = conn(user: me, account: account)
+
+    conn
+    |> visit("/+#{topic_a.character.username}")
+    |> wait_async()
+    |> assert_has_or_open_browser("article", text: "Post about alpha")
+    |> refute_has_or_open_browser("article", text: "Post about beta")
+
+    conn
+    |> visit("/+#{topic_b.character.username}")
+    |> wait_async()
+    |> assert_has_or_open_browser("article", text: "Post about beta")
+    |> refute_has_or_open_browser("article", text: "Post about alpha")
+  end
+
   test "clicking a topic tag navigates to the topic page" do
     account = fake_account!()
     me = fake_user!(account)
