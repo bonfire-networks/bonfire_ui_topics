@@ -27,6 +27,22 @@
         class="btn btn-sm btn-soft"
         hide_icon
       />
+
+      <Bonfire.UI.Common.OpenModalLive
+        :if={current_user_id(@__context__) &&
+          Bonfire.Classify.ensure_update_allowed(current_user(@__context__), @category)}
+        id={"edit_topic_modal_#{uid(@category)}"}
+        title_text={l("Edit topic")}
+        no_actions
+        open_btn_aria_label={l("Edit topic")}
+      >
+        <Bonfire.UI.Topics.Settings.GeneralLive category={@category} />
+        <:open_btn>
+          <div class="btn btn-sm btn-soft btn-circle">
+            <#Icon iconify="ph:gear-six-duotone" class="w-4 h-4" />
+          </div>
+        </:open_btn>
+      </Bonfire.UI.Common.OpenModalLive>
     </div>
   </div>
 </section>

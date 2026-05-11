@@ -1,8 +1,8 @@
-<div class="flex flex-col gap-3 p-4 pt-0">
+<div class="flex flex-col gap-3">
   {#if !Bonfire.Classify.ensure_update_allowed(current_user(@__context__), @category)}
     {l("Sorry, you cannot edit this topic.")}
   {#else}
-    <StatefulComponent
+    <!-- <StatefulComponent
       module={maybe_component(Bonfire.Files.Web.UploadIconLive, @__context__)}
       id={:upload_icon}
       class="inline-block w-24 h-24"
@@ -13,7 +13,7 @@
       end}
       set_field={:category}
       set_fn={&Bonfire.Classify.LiveHandler.set_image/5}
-    />
+    /> -->
 
     <form phx-submit="Bonfire.Classify:edit">
       <div class="w-full form-control">
@@ -26,7 +26,7 @@
           class="w-full text-sm input input-bordered"
         />
       </div>
-      <div class="w-full form-control">
+      <div class="w-full mt-3 form-control">
         <textarea
           name="profile[summary]"
           class="w-full textarea textarea-bordered"
@@ -43,5 +43,38 @@
         {l("Edit")}
       </button>
     </form>
+
+    {!-- Danger zone — soft-delete (archive), restorable later. --}
+    <section
+      aria-labelledby="topic-settings-danger-heading"
+      class="flex flex-col gap-3 mt-8 pt-6 border-t border-base-content/10"
+    >
+      <header class="flex flex-col gap-0.5">
+        <h2 id="topic-settings-danger-heading" class="text-base font-semibold leading-tight">
+          {l("Danger zone")}
+        </h2>
+        <p class="text-sm text-base-content/60">
+          {l("Take the topic offline. You can restore it later.")}
+        </p>
+      </header>
+
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-lg border border-base-content/15 bg-base-200/40 p-4">
+        <div class="flex-1">
+          <div class="text-sm font-medium text-base-content">{l("Archive this topic")}</div>
+          <p class="text-xs text-base-content/60 mt-0.5 leading-snug">
+            {l("Hides it from the public. You can restore the topic later.")}
+          </p>
+        </div>
+        <button
+          type="button"
+          id={"topic_settings_archive_button_#{uid(@category)}"}
+          :on-click="Bonfire.Classify:archive"
+          data-confirm={l("Archive this topic? You can restore it later.")}
+          class="btn btn-sm btn-outline normal-case shrink-0"
+        >
+          {l("Archive topic")}
+        </button>
+      </div>
+    </section>
   {/if}
 </div>
