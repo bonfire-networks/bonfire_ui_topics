@@ -32,7 +32,7 @@
         <textarea
           name="summary"
           class="w-full textarea textarea-bordered"
-          placeholder="Write a short description"
+          placeholder={l("Write a short description")}
         />
       </div>
 
