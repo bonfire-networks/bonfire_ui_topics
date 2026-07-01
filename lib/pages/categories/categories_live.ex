@@ -1,7 +1,7 @@
 defmodule Bonfire.UI.Topics.CategoriesLive do
   use Bonfire.UI.Common.Web, :surface_live_view
 
-  declare_extension("Topics",
+  declare_extension(l("Topics"),
     icon: "mdi:bookshelf",
     emoji: "📚",
     description: l("Organise content and discussions according to topics."),
