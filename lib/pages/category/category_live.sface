@@ -12,7 +12,7 @@
     {...assigns}
   >
     <:header>
-      {#if e(@category, :parent_category, nil)}
+      <!-- {#if e(@category, :parent_category, nil)}
         <StatefulComponent
           module={Config.get(
             [:ui, :group, :hero_component],
@@ -36,7 +36,7 @@
           subcategories={e(assigns, :subcategories, [])}
           selected_category_id={id(@category)}
         />
-      {/if}
+      {/if} -->
 
       <StatelessComponent
         module={maybe_component(Bonfire.UI.Topics.TopicHeroLive, @__context__)}
@@ -44,6 +44,9 @@
         permalink={@permalink}
         object_boundary={@object_boundary}
         boundary_preset={@boundary_preset}
+        subcategories={e(assigns, :subcategories, [])}
+        selected_category_id={id(@category)}
+        user={e(@category, :parent_category, nil)}
       />
 
       <StatelessComponent

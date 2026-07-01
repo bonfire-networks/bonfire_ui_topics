@@ -1,11 +1,20 @@
 <section
   data-id="topic_subheader"
   aria-label={e(@category, :profile, :name, l("Topic"))}
-  class="pb-4"
+  class="border-y-hair border-secondary bg-base-200 mb-1"
 >
-  <div class="flex items-center justify-between gap-4">
+  <StatelessComponent
+    module={maybe_component(
+      Bonfire.UI.Groups.GroupTopicsNavLive,
+      @__context__
+    )}
+    group={@user}
+    topics={@subcategories}
+    selected_id={@selected_category_id || id(@user)}
+  />
+  <div class="flex p-card items-center justify-between gap-4">
     <div class="flex items-center gap-3 min-w-0 flex-1">
-      <#Icon iconify="ph:hash-duotone" class="h-6 w-6 text-primary" />
+      <!-- <#Icon iconify="ph:hash-duotone" class="h-6 w-6 text-primary" /> -->
 
       <div class="min-w-0 flex-1">
         <h2 class="text-base font-bold tracking-tight text-base-content leading-tight truncate">
@@ -24,8 +33,7 @@
         path={@permalink}
         title={l("Show or hide this topic in your feed")}
         container_class="inline-flex items-center"
-        class="btn btn-sm btn-soft"
-        hide_icon
+        class="btn btn-sm btn-primary"
       />
 
       <Bonfire.UI.Common.OpenModalLive
@@ -38,7 +46,7 @@
       >
         <Bonfire.UI.Topics.Settings.GeneralLive category={@category} />
         <:open_btn>
-          <div class="btn btn-sm btn-soft btn-circle">
+          <div class="btn btn-sm btn-outline btn-primary btn-circle">
             <#Icon iconify="ph:gear-six-duotone" class="w-4 h-4" />
           </div>
         </:open_btn>

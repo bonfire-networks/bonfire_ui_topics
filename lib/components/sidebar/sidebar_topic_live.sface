@@ -1,7 +1,7 @@
 <li class="flex items-center gap-5">
   <LinkLive to={path(@category)} class="flex items-center w-full gap-3 px-2 py-2 rounded-md">
-    <#Icon iconify="mdi:comment-plus" class="w-4 h-4 text-base-content/70" />
-    <span class="text-sm font-medium text-base-content/70">{e(@category, :profile, :name, nil)}</span>
+    <#Icon iconify="mdi:comment-plus" class="w-4 h-4 text-muted" />
+    <span class="text-sm font-medium text-muted">{e(@category, :profile, :name, nil)}</span>
   </LinkLive>
 
   <ul class="gap-1 my-2 menu" :if={@children && @children != []}>
