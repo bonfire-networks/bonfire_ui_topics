@@ -1,7 +1,7 @@
 <section
   data-id="topic_subheader"
   aria-label={e(@category, :profile, :name, l("Topic"))}
-  class="border-y-hair border-secondary bg-base-200 mb-1"
+  class="border-y-hair border-secondary bg-base-200"
 >
   <StatelessComponent
     module={maybe_component(
