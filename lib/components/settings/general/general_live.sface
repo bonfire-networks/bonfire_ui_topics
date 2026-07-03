@@ -50,7 +50,7 @@
       class="flex flex-col gap-3 mt-8 pt-6 border-t border-base-content/10"
     >
       <header class="flex flex-col gap-0.5">
-        <h2 id="topic-settings-danger-heading" class="text-base font-semibold leading-tight">
+        <h2 id="topic-settings-danger-heading" class="text-base font-medium leading-tight">
           {l("Danger zone")}
         </h2>
         <p class="text-sm text-muted">
