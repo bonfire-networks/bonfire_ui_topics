@@ -22,7 +22,7 @@
         {e(@category, :profile, :name, nil) || e(@category, :name, nil)}
       </span>
 
-      <p :if={e(@category, :profile, :summary, nil)} class="text-xs text-base-content/50 line-clamp-2">{e(@category, :profile, :summary, nil)}</p>
+      <p :if={e(@category, :profile, :summary, nil)} class="text-xs text-muted line-clamp-2">{e(@category, :profile, :summary, nil)}</p>
 
       {!-- Meta row --}
       <div class="flex items-center gap-3 mt-1">
@@ -54,7 +54,7 @@
   </LinkLive>
 
   {!-- Subtopics --}
-  <ul class="ml-6 pl-4 border-l border-base-content/10" :if={@children && @children != []}>
+  <ul class="ml-6 pl-4 border-l border-secondary" :if={@children && @children != []}>
     <Bonfire.UI.Topics.TopicsLive
       :for={{subcategory, subchildren} <- @children}
       category={subcategory}
