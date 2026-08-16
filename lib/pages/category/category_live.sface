@@ -10,6 +10,7 @@
     module={Config.get([:ui, :topic, :sections], [])[tab(@selected_tab)] ||
       Bonfire.UI.Social.ProfileTimelineLive}
     {...assigns}
+    custom_actions={Bonfire.UI.Social.Activity.DiscussionPreviewActionsLive}
   >
     <:header>
       <!-- {#if e(@category, :parent_category, nil)}

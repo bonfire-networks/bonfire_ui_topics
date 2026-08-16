@@ -42,6 +42,7 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
     |> visit("/+#{topic.character.username}")
     |> wait_async()
     |> assert_has_or_open_browser("article", text: "Topic post content here")
+    |> assert_has_or_open_browser("[data-role=discussion_preview_actions]")
   end
 
   test "mentioning a topic in a post shows the tag link in the rendered post" do
