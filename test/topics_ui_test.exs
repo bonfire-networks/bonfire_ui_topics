@@ -12,14 +12,10 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
       "to_circles" => [topic_id]
     }
 
-    # The topic page renders an `inline_composer_placeholder` div whose
-    # `phx-click` opens the global composer with the topic context prefilled.
-    # The visible button (`[data-role=composer_button]`) just shows a generic
-    # "Compose", so we trigger the placeholder directly.
     session
     |> PhoenixTest.unwrap(fn view ->
       view
-      |> Phoenix.LiveViewTest.element("#inline_composer_placeholder")
+      |> Phoenix.LiveViewTest.element("#inline_composer_placeholder_open")
       |> Phoenix.LiveViewTest.render_click()
 
       view
