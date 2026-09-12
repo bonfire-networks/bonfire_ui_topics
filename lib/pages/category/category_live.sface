@@ -1,4 +1,4 @@
-<main
+<div
   data-id="topic"
   id={"topic-#{e(@category, :id, "")}"}
   data-topic-id={e(@category, :id, "")}
@@ -6,6 +6,25 @@
     "": !current_user_id(@__context__)
   }
 >
+  <header id="topic-parent-header" class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-hair border-secondary bg-base-100 px-4 py-3">
+    <LinkLive to={if e(@category, :parent_category, nil), do: Bonfire.Classify.Web.GroupNavigation.link(path(@category.parent_category), @group_return_to), else: "/groups"} class="inline-flex min-w-0 items-center gap-3 text-sm text-base-content" opts={[id: "topic-parent-link"]}>
+      <#Icon iconify="ph:caret-left" class="size-4 shrink-0" />
+      {#if e(@category, :parent_category, nil)}
+        {#case Media.avatar_url(e(@category, :parent_category, nil))}
+          {#match "/images/avatar.png"}
+            <span class="grid size-7 shrink-0 place-items-center rounded-lg bg-base-200" aria-hidden="true"><#Icon iconify="ph:users-three" class="size-5" /></span>
+          {#match avatar}
+            <img src={avatar} alt="" width="28" height="28" class="size-7 shrink-0 rounded-lg object-cover" />
+        {/case}
+        <span class="truncate">{e(@category, :parent_category, :profile, :name, l("Group"))}</span>
+      {#else}
+        {l("Groups")}
+      {/if}
+    </LinkLive>
+    <label for="widgets-drawer" class="btn btn-ghost btn-circle shrink-0 xl:hidden" aria-label={l("Open widgets sidebar")}>
+      <#Icon iconify="ph:sidebar-simple" class="size-5" />
+    </label>
+  </header>
   <StatelessComponent
     module={Config.get([:ui, :topic, :sections], [])[tab(@selected_tab)] ||
       Bonfire.UI.Social.ProfileTimelineLive}
@@ -13,43 +32,15 @@
     custom_actions={Bonfire.UI.Social.Activity.DiscussionPreviewActionsLive}
   >
     <:header>
-      <!-- {#if e(@category, :parent_category, nil)}
-        <StatefulComponent
-          module={Config.get(
-            [:ui, :group, :hero_component],
-            Bonfire.UI.Me.ProfileHeroFullLive
-          )}
-          id={deterministic_dom_id(
-            "profile_hero_group",
-            id(e(@category, :parent_category, nil)),
-            @selected_tab
-          )}
-          user={e(@category, :parent_category, nil)}
-          path={path(e(@category, :parent_category, nil))}
-          character_type={:group}
-          boundary_preset={@boundary_preset}
-          object_boundary={@object_boundary}
-          permalink={path(e(@category, :parent_category, nil))}
-          follows_me={false}
-          selected_tab={@selected_tab}
-          members={e(assigns, :members, [])}
-          moderators={e(assigns, :moderators, [])}
-          subcategories={e(assigns, :subcategories, [])}
-          selected_category_id={id(@category)}
-        />
-      {/if} -->
-
       <StatelessComponent
         module={maybe_component(Bonfire.UI.Topics.TopicHeroLive, @__context__)}
         category={@category}
         permalink={@permalink}
         object_boundary={@object_boundary}
         boundary_preset={@boundary_preset}
-        subcategories={e(assigns, :subcategories, [])}
-        selected_category_id={id(@category)}
         user={e(@category, :parent_category, nil)}
       />
-      <div class="my-1">
+      <div class="">
         <StatelessComponent
           module={maybe_component(Bonfire.UI.Common.InlineComposerPlaceholderLive, @__context__)}
           selected_tab={@selected_tab}
@@ -66,4 +57,4 @@
       </div>
     </:header>
   </StatelessComponent>
-</main>
+</div>

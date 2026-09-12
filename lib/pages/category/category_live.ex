@@ -1,10 +1,6 @@
 defmodule Bonfire.UI.Topics.CategoryLive do
   use Bonfire.UI.Common.Web, :surface_live_view
 
-  # alias Bonfire.UI.Topics.CategoryLive.SubcategoriesLive
-  alias Bonfire.Classify.Web.CommunityLive.CommunityCollectionsLive
-  alias Bonfire.Classify.Web.CollectionLive.CollectionResourcesLive
-
   on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.LoadCurrentUser]}
 
   def mount(params, session, socket) do
@@ -16,8 +12,8 @@ defmodule Bonfire.UI.Topics.CategoryLive do
        assign(
          socket,
          page: "topic",
-         showing_within: :topic
-         #  
+         showing_within: :topic,
+         no_header: true
        )}
     end
   end
@@ -28,7 +24,6 @@ defmodule Bonfire.UI.Topics.CategoryLive do
       _ -> :timeline
     end
 
-    # |> debug
   end
 
   def handle_params(params, uri, socket),
