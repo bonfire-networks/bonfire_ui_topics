@@ -6,55 +6,87 @@
     "": !current_user_id(@__context__)
   }
 >
-  <header id="topic-parent-header" class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-hair border-secondary bg-base-100 px-4 py-3">
-    <LinkLive to={if e(@category, :parent_category, nil), do: Bonfire.Classify.Web.GroupNavigation.link(path(@category.parent_category), @group_return_to), else: "/groups"} class="inline-flex min-w-0 items-center gap-3 text-sm text-base-content" opts={[id: "topic-parent-link"]}>
+  <header
+    id="topic-parent-header"
+    class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-hair border-secondary bg-base-100 px-4 py-3"
+  >
+    <LinkLive
+      to={if e(@category, :parent_category, nil),
+        do:
+          Bonfire.Classify.Web.GroupNavigation.link(path(@category.parent_category), @group_return_to),
+        else: "/groups"}
+      class="inline-flex min-w-0 items-center gap-3 text-sm text-base-content"
+      opts={[id: "topic-parent-link"]}
+    >
       <#Icon iconify="ph:caret-left" class="size-4 shrink-0" />
       {#if e(@category, :parent_category, nil)}
         {#case Media.avatar_url(e(@category, :parent_category, nil))}
           {#match "/images/avatar.png"}
             <span class="grid size-7 shrink-0 place-items-center rounded-lg bg-base-200" aria-hidden="true"><#Icon iconify="ph:users-three" class="size-5" /></span>
           {#match avatar}
-            <img src={avatar} alt="" width="28" height="28" class="size-7 shrink-0 rounded-lg object-cover" />
+            <img src={avatar} alt="" width="28" height="28" class="size-7 shrink-0 rounded-lg object-cover">
         {/case}
         <span class="truncate">{e(@category, :parent_category, :profile, :name, l("Group"))}</span>
       {#else}
         {l("Groups")}
       {/if}
     </LinkLive>
-    <label for="widgets-drawer" class="btn btn-ghost btn-circle shrink-0 xl:hidden" aria-label={l("Open widgets sidebar")}>
+    <label
+      for="widgets-drawer"
+      class="btn btn-ghost btn-circle shrink-0 xl:hidden"
+      aria-label={l("Open widgets sidebar")}
+    >
       <#Icon iconify="ph:sidebar-simple" class="size-5" />
     </label>
   </header>
-  <StatelessComponent
-    module={Config.get([:ui, :topic, :sections], [])[tab(@selected_tab)] ||
-      Bonfire.UI.Social.ProfileTimelineLive}
-    {...assigns}
-    custom_actions={Bonfire.UI.Social.Activity.DiscussionPreviewActionsLive}
-  >
-    <:header>
+  {!-- `view_mode` comes from `Bonfire.Classify.LiveHandler.mounted/3` (shared with the group page): `:preview` means the visitor holds `:see` but not `:read`, so they get the listing card instead of the topic's contents. --}
+  {#if e(assigns, :view_mode, :full) == :preview}
+    <div data-role="category_preview" class="mx-auto flex w-full max-w-2xl flex-col gap-4 p-4">
       <StatelessComponent
-        module={maybe_component(Bonfire.UI.Topics.TopicHeroLive, @__context__)}
-        category={@category}
-        permalink={@permalink}
+        module={maybe_component(
+          Config.get([:ui, :object_preview, :topic], Bonfire.Classify.Web.Preview.CategoryLive),
+          @__context__
+        )}
+        object={@category}
         object_boundary={@object_boundary}
-        boundary_preset={@boundary_preset}
-        user={e(@category, :parent_category, nil)}
+        permalink={@permalink}
+        showing_within={:preview}
       />
-      <div class="">
+      {!-- says nothing about WHY (members-only, blocked, silenced, ...) since the boundary check does not tell us --}
+      <p class="text-sm text-muted" role="status">{l("You don't have access to this topic's contents.")}</p>
+    </div>
+  {#else}
+    <StatelessComponent
+      module={Config.get([:ui, :topic, :sections], [])[tab(@selected_tab)] ||
+        Bonfire.UI.Social.ProfileTimelineLive}
+      {...assigns}
+      custom_actions={Bonfire.UI.Social.Activity.DiscussionPreviewActionsLive}
+    >
+      <:header>
         <StatelessComponent
-          module={maybe_component(Bonfire.UI.Common.InlineComposerPlaceholderLive, @__context__)}
-          selected_tab={@selected_tab}
-          prompt={l("Write in %{name}",
-            name: Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("topic"))
-          )}
-          smart_input_opts={%{
-            context_id: id(@category),
-            mentions: [id(@category)],
-            to_circles: Bonfire.Classify.Boundaries.post_circles_for_group(@category),
-            to_boundaries: List.wrap(Bonfire.Classify.Boundaries.read_default_content_visibility(@category))
-          }}
+          module={maybe_component(Bonfire.UI.Topics.TopicHeroLive, @__context__)}
+          category={@category}
+          permalink={@permalink}
+          object_boundary={@object_boundary}
+          boundary_preset={@boundary_preset}
+          user={e(@category, :parent_category, nil)}
         />
-      </div>
-    </:header>
-  </StatelessComponent>
+        <div class="">
+          <StatelessComponent
+            module={maybe_component(Bonfire.UI.Common.InlineComposerPlaceholderLive, @__context__)}
+            selected_tab={@selected_tab}
+            prompt={l("Write in %{name}",
+              name: Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("topic"))
+            )}
+            smart_input_opts={%{
+              context_id: id(@category),
+              mentions: [id(@category)],
+              to_circles: Bonfire.Classify.Boundaries.post_circles_for_group(@category),
+              to_boundaries: List.wrap(Bonfire.Classify.Boundaries.read_default_content_visibility(@category))
+            }}
+          />
+        </div>
+      </:header>
+    </StatelessComponent>
+  {/if}
 </div>

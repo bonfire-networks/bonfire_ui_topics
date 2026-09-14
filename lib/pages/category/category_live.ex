@@ -23,7 +23,6 @@ defmodule Bonfire.UI.Topics.CategoryLive do
       tab when is_atom(tab) -> tab
       _ -> :timeline
     end
-
   end
 
   def handle_params(params, uri, socket),

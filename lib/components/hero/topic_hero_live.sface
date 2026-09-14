@@ -1,19 +1,27 @@
-<section data-id="topic_subheader" aria-label={l("Topic")} class="border-b-hair border-secondary bg-base-200">
+<section
+  data-id="topic_subheader"
+  aria-label={l("Topic")}
+  class="border-b-hair border-secondary bg-base-200"
+>
   <div id="topic-parent-banner" class="h-24 overflow-hidden bg-primary sm:h-28" aria-hidden="true">
     {#case Media.banner_url(@user, fallback: false)}
       {#match nil}
       {#match banner}
-        <img src={banner} alt="" class="h-full w-full object-cover" />
+        <img src={banner} alt="" class="h-full w-full object-cover">
     {/case}
   </div>
   <div class="px-4 pb-6 sm:px-6">
     <div class="mb-4 flex items-start justify-between gap-3">
-      <div id="topic-icon" class="relative -mt-5 grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl border-4 border-base-200 bg-primary text-primary-content" aria-hidden="true">
+      <div
+        id="topic-icon"
+        class="relative -mt-5 grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl border-4 border-base-200 bg-primary text-primary-content"
+        aria-hidden="true"
+      >
         {#case Media.avatar_url(@category)}
           {#match "/images/avatar.png"}
             <#Icon iconify="ph:hash" class="size-7" />
           {#match url}
-            <img src={url} alt="" width="48" height="48" class="h-full w-full object-cover" />
+            <img src={url} alt="" width="48" height="48" class="h-full w-full object-cover">
         {/case}
       </div>
       <div class="flex shrink-0 items-center gap-2 pt-3">
@@ -38,7 +46,7 @@
           verb_already={l("Following")}
         />
         <span :if={current_user_id(@__context__) &&
-            Bonfire.Classify.ensure_update_allowed(current_user(@__context__), @category)}>
+          Bonfire.Classify.ensure_update_allowed(current_user(@__context__), @category)}>
           <Bonfire.UI.Common.OpenModalLive
             id={"edit_topic_modal_#{uid(@category)}"}
             title_text={l("Edit topic")}
@@ -56,10 +64,17 @@
       </div>
     </div>
     <p class="mb-1 text-xs text-muted">{l("Topic")}</p>
-    <h1 id="topic-title" class="text-2xl font-semibold leading-tight tracking-tight text-base-content break-words">
+    <h1
+      id="topic-title"
+      class="text-2xl font-semibold leading-tight tracking-tight text-base-content break-words"
+    >
       {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
     </h1>
-    <div :if={e(@category, :profile, :summary, nil)} id="topic-description" class="mt-3 max-w-prose text-sm leading-relaxed text-muted break-words">
+    <div
+      :if={e(@category, :profile, :summary, nil)}
+      id="topic-description"
+      class="mt-3 max-w-prose text-sm leading-relaxed text-muted break-words"
+    >
       {rich(e(@category, :profile, :summary, nil))}
     </div>
   </div>

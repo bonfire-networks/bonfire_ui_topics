@@ -8,11 +8,19 @@ defmodule Bonfire.UI.Topics.TopicHeaderTest do
     account = fake_account!()
     me = fake_user!(account)
     group = fake_group!(me, %{name: "Parent reading group"})
-    topic = fake_category!(me, group, %{name: "Reading notes", summary: "Passages worth discussing."})
+
+    topic =
+      fake_category!(me, group, %{name: "Reading notes", summary: "Passages worth discussing."})
+
     %{account: account, me: me, group: group, topic: topic}
   end
 
-  test "topic has one heading and a parent link instead of sibling navigation", %{account: account, me: me, group: group, topic: topic} do
+  test "topic has one heading and a parent link instead of sibling navigation", %{
+    account: account,
+    me: me,
+    group: group,
+    topic: topic
+  } do
     conn(user: me, account: account)
     |> visit("/+#{topic.character.username}")
     |> wait_async()
@@ -28,6 +36,7 @@ defmodule Bonfire.UI.Topics.TopicHeaderTest do
 
   test "top-level topics have a safe return link and no edit control for guests", %{me: me} do
     topic = fake_category!(me, nil, %{name: "Standalone topic"})
+
     Phoenix.ConnTest.build_conn()
     |> visit("/+#{topic.character.username}")
     |> assert_has("#topic-parent-link[href='/groups']", text: "Groups")
