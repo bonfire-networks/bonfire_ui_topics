@@ -18,7 +18,7 @@
       class="inline-flex min-w-0 items-center gap-3 text-sm text-base-content"
       opts={[id: "topic-parent-link"]}
     >
-      <#Icon iconify="ph:caret-left" class="size-4 shrink-0" />
+      <#Icon iconify="carbon:chevron-left" class="size-4 shrink-0" />
       {#if e(@category, :parent_category, nil)}
         {#case Media.avatar_url(e(@category, :parent_category, nil))}
           {#match "/images/avatar.png"}
