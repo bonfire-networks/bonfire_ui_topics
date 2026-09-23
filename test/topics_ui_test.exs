@@ -6,21 +6,13 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
   use Bonfire.Common.Utils
 
   defp post_in_topic(session, content, topic_id) do
-    params = %{
-      "post" => %{"post_content" => %{"html_body" => content}},
-      "context_id" => topic_id,
-      "to_circles" => [topic_id]
-    }
-
     session
     |> PhoenixTest.unwrap(fn view ->
       view
       |> Phoenix.LiveViewTest.element("#inline_composer_placeholder_open")
       |> Phoenix.LiveViewTest.render_click()
 
-      view
-      |> Phoenix.LiveViewTest.element("#smart_input_form")
-      |> Phoenix.LiveViewTest.render_submit(params)
+      submit_composer(view, content, %{"context_id" => topic_id, "to_circles" => [topic_id]})
     end)
   end
 
@@ -59,14 +51,7 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
       |> Phoenix.LiveViewTest.element("#main_smart_input_button")
       |> Phoenix.LiveViewTest.render_click()
 
-      view
-      |> Phoenix.LiveViewTest.element("#smart_input_form")
-      |> Phoenix.LiveViewTest.render_submit(%{
-        "post" => %{
-          "post_content" => %{
-            "html_body" => "+#{topic.character.username} this is very on topic"
-          }
-        },
+      submit_composer(view, "+#{topic.character.username} this is very on topic", %{
         "boundary" => "mentions"
       })
     end)
