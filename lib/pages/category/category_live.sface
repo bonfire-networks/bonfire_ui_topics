@@ -41,20 +41,15 @@
   </header>
   {!-- `view_mode` comes from `Bonfire.Classify.LiveHandler.mounted/3` (shared with the group page): `:preview` means the visitor holds `:see` but not `:read`, so they get the listing card instead of the topic's contents. --}
   {#if e(assigns, :view_mode, :full) == :preview}
-    <div data-role="category_preview" class="mx-auto flex w-full max-w-2xl flex-col gap-4 p-4">
-      <StatelessComponent
-        module={maybe_component(
-          Config.get([:ui, :object_preview, :topic], Bonfire.Classify.Web.Preview.CategoryLive),
-          @__context__
-        )}
-        object={@category}
-        object_boundary={@object_boundary}
-        permalink={@permalink}
-        showing_within={:preview}
-      />
-      {!-- says nothing about WHY (members-only, blocked, silenced, ...) since the boundary check does not tell us --}
-      <p class="text-sm text-muted" role="status">{l("You don't have access to this topic's contents.")}</p>
-    </div>
+    <StatelessComponent
+      module={maybe_component(Bonfire.UI.Topics.TopicAccessGateLive, @__context__)}
+      category={@category}
+      permalink={@permalink}
+      group_return_to={@group_return_to}
+      parent={e(assigns, :topic_gate, :parent, nil)}
+      parent_member={e(assigns, :topic_gate, :parent_member, false)}
+      membership={e(assigns, :topic_gate, :membership, nil)}
+    />
   {#else}
     <StatelessComponent
       module={Config.get([:ui, :topic, :sections], [])[tab(@selected_tab)] ||

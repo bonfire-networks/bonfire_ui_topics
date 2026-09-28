@@ -1,0 +1,56 @@
+<section data-role="category_preview" id="topic_access_gate" class="w-full" aria-labelledby="topic-access-title">
+  <div class="overflow-hidden border-b border-secondary bg-base-100">
+    <div class="h-20 overflow-hidden bg-base-content/10 sm:h-24" aria-hidden="true">
+      {#if @parent}
+        {#case Media.banner_url(@parent, fallback: false)}
+          {#match nil}
+          {#match banner}
+            <img src={banner} alt="" class="size-full object-cover">
+        {/case}
+      {/if}
+    </div>
+    <div class="flex flex-col items-start gap-5 bg-base-content/5 p-5 sm:p-6">
+      <header class="flex w-full min-w-0 items-start gap-3">
+        <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">
+          <#Icon iconify="ph:chats-circle-duotone" class="size-6" />
+        </span>
+        <div class="min-w-0">
+          <p class="text-xs font-medium text-muted">{l("Topic")}</p>
+          <h1 id="topic-access-title" class="break-words text-2xl font-semibold leading-tight text-base-content">{Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("Topic"))}</h1>
+        </div>
+      </header>
+      <div class="flex w-full flex-col gap-2 border-t border-secondary pt-4">
+        <h2 class="inline-flex items-center gap-2 text-sm font-semibold text-base-content">
+          <#Icon iconify="ph:lock-key" class="size-4 shrink-0" aria-hidden="true" />
+          {l("Restricted discussions")}
+        </h2>
+        <p class="max-w-prose text-sm leading-relaxed text-muted">{l("You don't currently have access to read this topic.")}</p>
+      </div>
+      {#if is_nil(current_user(@__context__))}
+        <a href={"/login?" <> Plug.Conn.Query.encode(go: @permalink)} class="btn btn-primary min-h-11">{l("Sign in")}</a>
+      {#elseif @parent}
+        {#if @can_join?}
+          <p class="text-sm text-muted">{l("Use the group's membership options below, or visit the group for access details.")}</p>
+          <StatefulComponent
+            id={"join_btn_#{id(@parent)}"}
+            module={maybe_component(Bonfire.Classify.Web.JoinButtonLive, @__context__)}
+            object_id={id(@parent)}
+            object={@parent}
+            object_name={e(@parent, :profile, :name, nil)}
+            membership={@membership}
+            path={path(@parent)}
+            showing_within={:list}
+            combined
+            class="btn btn-primary min-h-11"
+          />
+        {/if}
+        <LinkLive
+          to={Bonfire.Classify.Web.GroupNavigation.link(path(@parent), @group_return_to)}
+          class={"btn min-h-11", "btn-primary": not @can_join?, "btn-ghost": @can_join?}
+        >{l("View group")}</LinkLive>
+      {#else}
+        <LinkLive to="/groups" class="btn btn-primary min-h-11">{l("Browse groups")}</LinkLive>
+      {/if}
+    </div>
+  </div>
+</section>
