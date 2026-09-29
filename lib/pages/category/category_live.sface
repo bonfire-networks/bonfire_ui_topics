@@ -70,7 +70,7 @@
           <StatelessComponent
             module={maybe_component(Bonfire.UI.Common.InlineComposerPlaceholderLive, @__context__)}
             selected_tab={@selected_tab}
-            prompt={l("Write in %{name}",
+            prompt={l("Start a discussion in %{name}…",
               name: Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("topic"))
             )}
             smart_input_opts={%{
