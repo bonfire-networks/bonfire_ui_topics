@@ -5,6 +5,7 @@ defmodule Bonfire.UI.Topics.TopicAccessGateLive do
   prop category, :map, required: true
   prop permalink, :string, required: true
   prop group_return_to, :string, default: "/groups"
+
   # the parent group's membership options, resolved in `Bonfire.Classify.LiveHandler`; `parent` is nil when the visitor may not see it
   prop parent, :any, default: nil
   prop parent_member, :boolean, default: false
