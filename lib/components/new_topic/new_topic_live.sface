@@ -1,11 +1,14 @@
 <Bonfire.UI.Common.OpenModalLive
-  id="new_topic"
+  id={@id}
   title_text={title(l("Create a new topic"), e(@parent, :profile, :name, nil))}
   no_actions
-  open_btn_wrapper_class="block"
+  open_btn_aria_label={@label}
+  open_modal_wrapper_class={@open_modal_wrapper_class}
+  open_btn_wrapper_class={@open_btn_wrapper_class}
 >
   <div x-data="{ name: '' }" class="">
     <Form
+      id="new_topic_form"
       class="flex flex-col w-full gap-3"
       for={%{}}
       as={:category}
@@ -18,6 +21,7 @@
       }
     >
       <div class="w-full form-control">
+        <label for="name" class="sr-only">{l("Topic name")}</label>
         <input
           x-model="name"
           id="name"
@@ -65,6 +69,7 @@
       <button
         x-bind:disabled="name.length == 0"
         type="submit"
+        data-role="new_topic_submit"
         class="w-full mt-3 normal-case btn btn-primary"
       >
         {l("Create")}
@@ -72,9 +77,11 @@
     </Form>
   </div>
   <:open_btn>
-    <div type="button" class="flex items-center gap-2 justify-between text-base-content">
-      <span class="text-sm">{l("New Topic")}</span>
-      <#Icon iconify="ph:chats-circle-duotone" class="w-5 h-5 shrink-0" />
-    </div>
+    <#slot {@open_btn}>
+      <span class="flex items-center gap-2 justify-between text-base-content">
+        <span class="text-sm">{@label || l("New topic")}</span>
+        <#Icon iconify="ph:chats-circle-duotone" class="w-5 h-5 shrink-0" />
+      </span>
+    </#slot>
   </:open_btn>
 </Bonfire.UI.Common.OpenModalLive>

@@ -24,7 +24,7 @@
             <img src={url} alt="" width="48" height="48" class="h-full w-full object-cover">
         {/case}
       </div>
-      <div class="flex shrink-0 items-center gap-2 pt-3">
+      <div class="flex shrink-0 items-center gap-3 pt-3">
         <StatefulComponent
           module={maybe_component(Bonfire.UI.Social.Graph.FollowButtonLive, @__context__)}
           :if={not is_nil(e(@category, :character, nil)) and current_user_id(@__context__)}
@@ -34,9 +34,11 @@
           path={@permalink}
           title={l("Follow topic")}
           title_already={l("Unfollow topic")}
-          container_class="inline-flex items-center"
-          class="btn btn-sm btn-square bg-transparent border-secondary text-muted"
-          class_already="btn btn-sm btn-square bg-transparent border-secondary text-primary"
+          container_class="inline-flex items-center gap-3"
+          class="btn btn-sm btn-circle border-0 bg-[var(--stream-surface,var(--color-base-200))] text-muted shadow-none hover:bg-[var(--stream-fill-hover,var(--color-base-300))]"
+          class_already="btn btn-sm btn-circle border-0 bg-[var(--stream-surface,var(--color-base-200))] text-primary shadow-none hover:bg-[var(--stream-fill-hover,var(--color-base-300))]"
+          bell_class="btn btn-sm btn-circle border-0 bg-[var(--stream-surface,var(--color-base-200))] text-muted shadow-none hover:bg-[var(--stream-fill-hover,var(--color-base-300))] touch-target-expanded"
+          bell_class_enabled="btn btn-sm btn-circle border-0 bg-[var(--stream-surface,var(--color-base-200))] text-primary shadow-none hover:bg-[var(--stream-fill-hover,var(--color-base-300))] touch-target-expanded"
           icon="ph:rss"
           icon_already="ph:rss"
           icon_class="size-4"
@@ -55,7 +57,7 @@
           >
             <Bonfire.UI.Topics.Settings.GeneralLive category={@category} />
             <:open_btn>
-              <div class="btn btn-sm btn-ghost btn-circle">
+              <div class="btn btn-sm btn-circle border-0 bg-[var(--stream-surface,var(--color-base-200))] text-muted shadow-none hover:bg-[var(--stream-fill-hover,var(--color-base-300))]">
                 <#Icon iconify="ph:gear-six-duotone" class="w-4 h-4" />
               </div>
             </:open_btn>
