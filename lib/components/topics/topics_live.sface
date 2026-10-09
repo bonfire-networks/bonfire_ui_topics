@@ -1,15 +1,15 @@
 <div class="">
   <LinkLive
     to={path(@category)}
-    class="group flex items-center gap-3 p-3 -mx-1 rounded-xl hover:bg-base-content/5 transition-colors"
+    class="group flex items-center gap-3 p-3 -mx-1 rounded-xl hover:bg-fill transition-colors"
   >
     {!-- Icon --}
-    <div class="flex items-center justify-center w-10 h-10 mt-0.5 rounded-lg bg-base-content/5 shrink-0 group-hover:bg-primary/10 transition-colors">
+    <div class="flex items-center justify-center w-10 h-10 mt-0.5 rounded-lg bg-fill shrink-0 group-hover:bg-primary/10 transition-colors">
       {#case Media.avatar_url(@category)}
         {#match "/images/avatar.png"}
           <#Icon
             iconify="ph:chats-circle-duotone"
-            class="w-5 h-5 text-base-content/40 group-hover:text-primary/70 transition-colors"
+            class="w-5 h-5 text-subtle group-hover:text-primary/70 transition-colors"
           />
         {#match url}
           <LazyImage src={url} class="w-10 h-10 rounded-lg object-cover" />
@@ -28,14 +28,14 @@
       <div class="flex items-center gap-3 mt-1">
         <span
           :if={e(@category, :character, :follow_count, :object_count, 0) > 0}
-          class="flex items-center gap-1 text-xs text-base-content/40"
+          class="flex items-center gap-1 text-xs text-subtle"
         >
           <#Icon iconify="ph:users-duotone" class="w-3.5 h-3.5" />
           {e(@category, :character, :follow_count, :object_count, 0)}
         </span>
         <span
           :if={e(@category, :tree, :direct_children_count, 0) > 0}
-          class="flex items-center gap-1 text-xs text-base-content/40"
+          class="flex items-center gap-1 text-xs text-subtle"
         >
           <#Icon iconify="ph:chats-circle-duotone" class="w-3.5 h-3.5" />
           {e(@category, :tree, :direct_children_count, 0)}
@@ -54,7 +54,7 @@
   </LinkLive>
 
   {!-- Subtopics --}
-  <ul class="ml-6 pl-4 border-l border-secondary" :if={@children && @children != []}>
+  <ul class="ml-6 pl-4 border-l border-divider" :if={@children && @children != []}>
     <Bonfire.UI.Topics.TopicsLive
       :for={{subcategory, subchildren} <- @children}
       category={subcategory}

@@ -28,7 +28,7 @@
     <div class="block rounded-md shadow bg-base-100">
       <div
         role="tablist"
-        class="w-full py-4 mb-3 text-sm font-medium border-b text-muted justify-evenly border-secondary tabs"
+        class="w-full py-4 mb-3 text-sm font-medium border-b text-muted justify-evenly border-divider tabs"
       >
         {l("Local topics")}
       </div>
@@ -38,7 +38,7 @@
             to={if e(category, :character, :username, nil),
               do: ~p"/+#{e(category, :character, :username, nil)}",
               else: ~p"/labels/#{e(category, :id, nil)}"}
-            class="flex items-center gap-1 rounded shadow-xl cursor-pointer bg-base-content/5 hover:bg-base-content/10"
+            class="flex items-center gap-1 rounded shadow-xl cursor-pointer bg-fill hover:bg-fill-strong"
             :for={category <- @categories}
           >
             <div

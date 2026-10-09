@@ -8,7 +8,7 @@
 >
   <header
     id="topic-parent-header"
-    class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-hair border-secondary bg-base-100 px-4 py-3"
+    class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-hair border-divider bg-base-100 px-4 py-3"
   >
     <LinkLive
       to={if e(@category, :parent_category, nil),
