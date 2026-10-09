@@ -1,10 +1,10 @@
 <div class="">
   <LinkLive
     to={path(@category)}
-    class="group flex items-center gap-3 p-3 -mx-1 rounded-xl hover:bg-fill transition-colors"
+    class="group flex items-center gap-3 p-3 -mx-1 rounded-box hover:bg-fill transition-colors"
   >
     {!-- Icon --}
-    <div class="flex items-center justify-center w-10 h-10 mt-0.5 rounded-lg bg-fill shrink-0 group-hover:bg-primary/10 transition-colors">
+    <div class="flex items-center justify-center w-10 h-10 mt-0.5 rounded-box bg-fill shrink-0 group-hover:bg-primary/10 transition-colors">
       {#case Media.avatar_url(@category)}
         {#match "/images/avatar.png"}
           <#Icon
@@ -12,7 +12,7 @@
             class="w-5 h-5 text-subtle group-hover:text-primary/70 transition-colors"
           />
         {#match url}
-          <LazyImage src={url} class="w-10 h-10 rounded-lg object-cover" />
+          <LazyImage src={url} class="w-10 h-10 rounded-box object-cover" />
       {/case}
     </div>
 

@@ -17,7 +17,7 @@
     <div class="flex flex-col items-start gap-5 bg-fill p-5 sm:p-6">
       <header class="flex w-full min-w-0 items-start gap-3">
         <span
-          class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary"
+          class="grid size-11 shrink-0 place-items-center rounded-box bg-primary/10 text-primary"
           aria-hidden="true"
         >
           <#Icon iconify="ph:chats-circle-duotone" class="size-6" />
@@ -26,12 +26,12 @@
           <p class="text-xs font-medium text-muted">{l("Topic")}</p>
           <h1
             id="topic-access-title"
-            class="break-words text-2xl font-semibold leading-tight text-base-content"
+            class="break-words type-title leading-tight text-base-content"
           >{Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("Topic"))}</h1>
         </div>
       </header>
       <div class="flex w-full flex-col gap-2 border-t border-divider pt-4">
-        <h2 class="inline-flex items-center gap-2 text-sm font-semibold text-base-content">
+        <h2 class="inline-flex items-center gap-2 text-sm font-bold text-base-content">
           <#Icon iconify="ph:lock-key" class="size-4 shrink-0" aria-hidden="true" />
           {l("Restricted discussions")}
         </h2>
