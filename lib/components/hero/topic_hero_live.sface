@@ -58,7 +58,7 @@
             <Bonfire.UI.Topics.Settings.GeneralLive category={@category} />
             <:open_btn>
               <div class="btn btn-sm btn-circle border-0 bg-surface text-muted shadow-none hover:bg-fill-strong">
-                <#Icon iconify="ph:gear-six-duotone" class="w-4 h-4" />
+                <#Icon iconify="ph:gear-six-duotone" class="size-4" />
               </div>
             </:open_btn>
           </Bonfire.UI.Common.OpenModalLive>
