@@ -38,7 +38,7 @@
         <p class="max-w-prose text-sm leading-relaxed text-muted">{l("You don't currently have access to read this topic.")}</p>
       </div>
       {#if is_nil(current_user(@__context__))}
-        <a href={"/login?" <> Plug.Conn.Query.encode(go: @permalink)} class="btn btn-primary min-h-11">{l("Sign in")}</a>
+        <a href={"/login?" <> Plug.Conn.Query.encode(go: @permalink)} class="btn btn-primary">{l("Sign in")}</a>
       {#elseif @parent}
         {#if @can_join?}
           <p class="text-sm text-muted">{l("Use the group's membership options below, or visit the group for access details.")}</p>
@@ -52,15 +52,15 @@
             path={path(@parent)}
             showing_within={:list}
             combined
-            class="btn btn-primary min-h-11"
+            class="btn btn-primary"
           />
         {/if}
         <LinkLive
           to={Bonfire.Classify.Web.GroupNavigation.link(path(@parent), @group_return_to)}
-          class={"btn min-h-11", "btn-primary": not @can_join?, "btn-ghost": @can_join?}
+          class={"btn", "btn-primary": not @can_join?, "btn-ghost": @can_join?}
         >{l("View group")}</LinkLive>
       {#else}
-        <LinkLive to="/groups" class="btn btn-primary min-h-11">{l("Browse groups")}</LinkLive>
+        <LinkLive to="/groups" class="btn btn-primary">{l("Browse groups")}</LinkLive>
       {/if}
     </div>
   </div>
