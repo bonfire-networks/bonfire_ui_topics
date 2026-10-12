@@ -66,10 +66,7 @@
       </div>
     </div>
     <p class="mb-1 text-xs text-muted">{l("Topic")}</p>
-    <h1
-      id="topic-title"
-      class="type-title leading-tight text-base-content break-words"
-    >
+    <h1 id="topic-title" class="type-title leading-tight text-base-content break-words">
       {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
     </h1>
     <div

@@ -24,10 +24,7 @@
         </span>
         <div class="min-w-0">
           <p class="text-xs font-medium text-muted">{l("Topic")}</p>
-          <h1
-            id="topic-access-title"
-            class="break-words type-title leading-tight text-base-content"
-          >{Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("Topic"))}</h1>
+          <h1 id="topic-access-title" class="break-words type-title leading-tight text-base-content">{Bonfire.Classify.Web.Preview.CategoryLive.name(@category, l("Topic"))}</h1>
         </div>
       </header>
       <div class="flex w-full flex-col gap-2 border-t border-divider pt-4">

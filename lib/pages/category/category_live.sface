@@ -24,7 +24,13 @@
           {#match "/images/avatar.png"}
             <span class="grid size-7 shrink-0 place-items-center rounded-box bg-base-200" aria-hidden="true"><#Icon iconify="ph:users-three" class="size-5" /></span>
           {#match avatar}
-            <img src={avatar} alt="" width="28" height="28" class="size-7 shrink-0 rounded-box object-cover">
+            <img
+              src={avatar}
+              alt=""
+              width="28"
+              height="28"
+              class="size-7 shrink-0 rounded-box object-cover"
+            />
         {/case}
         <span class="truncate">{e(@category, :parent_category, :profile, :name, l("Group"))}</span>
       {#else}
