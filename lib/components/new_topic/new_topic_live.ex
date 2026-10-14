@@ -11,7 +11,7 @@ defmodule Bonfire.UI.Topics.NewTopicLive do
   prop open_modal_wrapper_class, :css_class, default: nil
 
   @doc "Classes of the open `<button>` itself."
-  prop open_btn_wrapper_class, :css_class, default: "block"
+  prop open_btn_wrapper_class, :css_class, default: "block w-full"
 
   @doc "Content of the open button. Defaults to a dropdown menu item."
   slot open_btn

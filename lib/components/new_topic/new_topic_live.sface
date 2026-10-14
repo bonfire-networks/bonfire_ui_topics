@@ -78,9 +78,9 @@
   </div>
   <:open_btn>
     <#slot {@open_btn}>
-      <span class="flex items-center gap-2 justify-between text-base-content">
-        <span class="text-sm">{@label || l("New topic")}</span>
-        <#Icon iconify="ph:chats-circle-duotone" class="size-5 shrink-0" />
+      <span class="flex items-center gap-3 w-full text-sm text-base-content">
+        <#Icon iconify="ph:chats-circle-duotone" class="size-4 shrink-0 text-muted" />
+        <span class="flex-1 truncate text-left">{@label || l("New topic")}</span>
       </span>
     </#slot>
   </:open_btn>
