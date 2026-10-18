@@ -1,18 +1,28 @@
 <section
   data-id="topic_subheader"
+  data-variant={if @compact, do: "compact", else: "full"}
   aria-label={l("Topic")}
-  class="border-b-hair border-divider bg-base-200"
+  class={"border-b-hair border-divider", if(@compact, do: "bg-base-100", else: "bg-base-200")}
 >
-  <div id="topic-parent-banner" class="h-24 overflow-hidden bg-primary sm:h-28" aria-hidden="true">
+  <div
+    :if={not @compact}
+    id="topic-parent-banner"
+    class="h-24 overflow-hidden bg-primary sm:h-28"
+    aria-hidden="true"
+  >
     {#case Media.banner_url(@user, fallback: false)}
       {#match nil}
       {#match banner}
         <img src={banner} alt="" class="h-full w-full object-cover">
     {/case}
   </div>
-  <div class="px-4 pb-6 sm:px-6">
-    <div class="mb-4 flex items-start justify-between gap-3">
+  {!-- one wrapping row, so the actions are written once: full puts the icon and actions on top and the text below; compact puts the text first, actions beside it --}
+  <div class={
+    "flex flex-wrap items-start gap-x-3 px-4 sm:px-6",
+    if(@compact, do: "gap-y-3 py-3", else: "gap-y-4 pb-6")
+  }>
       <div
+        :if={not @compact}
         id="topic-icon"
         class="relative -mt-5 grid size-14 shrink-0 place-items-center overflow-hidden rounded-box border-4 border-base-200 bg-primary text-primary-content"
         aria-hidden="true"
@@ -24,7 +34,7 @@
             <img src={url} alt="" width="48" height="48" class="h-full w-full object-cover">
         {/case}
       </div>
-      <div class="flex shrink-0 items-center gap-3 pt-3">
+      <div class={"ml-auto flex shrink-0 items-center gap-3 order-1", if(not @compact, do: "pt-3")}>
         <StatefulComponent
           module={maybe_component(Bonfire.UI.Social.Graph.FollowButtonLive, @__context__)}
           :if={not is_nil(e(@category, :character, nil)) and current_user_id(@__context__)}
@@ -64,17 +74,29 @@
           </Bonfire.UI.Common.OpenModalLive>
         </span>
       </div>
-    </div>
-    <p class="mb-1 text-xs text-muted">{l("Topic")}</p>
-    <h1 id="topic-title" class="type-title leading-tight text-base-content break-words">
-      {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
-    </h1>
-    <div
-      :if={e(@category, :profile, :summary, nil)}
-      id="topic-description"
-      class="mt-3 max-w-prose text-sm leading-relaxed text-muted break-words"
-    >
-      {rich(e(@category, :profile, :summary, nil))}
+    <div class={"min-w-0", if(@compact, do: "flex-1 order-0", else: "basis-full order-2")}>
+      {#if @compact}
+        {!-- the page's h1 is the group's name, in the header above --}
+        <h2 id="topic-title" class="flex items-center gap-1 font-semibold leading-snug text-base-content break-words">
+          <#Icon iconify="ph:hash" class="size-4 shrink-0 text-muted" />
+          {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
+        </h2>
+      {#else}
+        <p class="mb-1 text-xs text-muted">{l("Topic")}</p>
+        <h1 id="topic-title" class="type-title leading-tight text-base-content break-words">
+          {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
+        </h1>
+      {/if}
+      <div
+        :if={e(@category, :profile, :summary, nil)}
+        id="topic-description"
+        class={
+          "max-w-prose text-sm leading-relaxed text-muted break-words",
+          if(@compact, do: "mt-0.5 line-clamp-2", else: "mt-3")
+        }
+      >
+        {rich(e(@category, :profile, :summary, nil))}
+      </div>
     </div>
   </div>
 </section>

@@ -6,7 +6,11 @@ defmodule Bonfire.UI.Topics.CategoryLive do
   def mount(params, session, socket) do
     with {:ok, socket} <-
            undead_mount(socket, fn ->
-             Bonfire.Classify.LiveHandler.mounted(params, session, socket)
+             # a topic in a group redirects to its page in the group frame, except on the routes that frame has no equivalent of: `/interact/follow` and `/topic/:id/:tab`
+             Bonfire.Classify.LiveHandler.mounted(params, session, socket,
+               redirect_topics_into_group:
+                 is_nil(e(assigns(socket), :live_action, nil)) and is_nil(params["tab"])
+             )
            end) do
       {:ok,
        assign(
