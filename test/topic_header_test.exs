@@ -15,7 +15,8 @@ defmodule Bonfire.UI.Topics.TopicHeaderTest do
     account: account,
     me: me
   } do
-    topic = fake_category!(me, nil, %{name: "Standalone notes", summary: "Passages worth discussing."})
+    topic =
+      fake_category!(me, nil, %{name: "Standalone notes", summary: "Passages worth discussing."})
 
     conn(user: me, account: account)
     |> visit("/+#{topic.character.username}")
