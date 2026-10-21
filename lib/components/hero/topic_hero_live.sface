@@ -18,7 +18,7 @@
   </div>
   {!-- one wrapping row, so the actions are written once: full puts the icon and actions on top and the text below; compact puts the text first, actions beside it --}
   <div class={
-    "flex flex-wrap items-start gap-x-3 px-4 sm:px-6",
+    "flex flex-wrap items-center gap-x-3 px-4",
     if(@compact, do: "gap-y-3 py-3", else: "gap-y-4 pb-6")
   }>
     <div
@@ -90,7 +90,7 @@
           {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
         </h1>
       {/if}
-      <div
+      <!-- <div
         :if={e(@category, :profile, :summary, nil)}
         id="topic-description"
         class={
@@ -99,7 +99,7 @@
         }
       >
         {rich(e(@category, :profile, :summary, nil))}
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
