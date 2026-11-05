@@ -64,6 +64,23 @@
       </div>
     </div> --}
 
+      {!-- ticked in a group marked sensitive, so its topics start marked too; each topic then keeps its own mark. An unticked box sends nothing, so the hidden `false` says so --}
+      <div class="w-full form-control">
+        {!-- `category[…]`, which `Bonfire.Classify.LiveHandler.new/3` merges in, rather than a bare `sensitive`, which the composer's own field is named --}
+        <input type="hidden" name="category[sensitive]" value="false">
+        <label for="new_topic_sensitive" class="flex items-center gap-3 cursor-pointer">
+          <input
+            id="new_topic_sensitive"
+            type="checkbox"
+            name="category[sensitive]"
+            value="true"
+            checked={Bonfire.Classify.Categories.sensitive?(@parent)}
+            class="checkbox checkbox-sm"
+          />
+          <span class="text-sm">{l("Mark as sensitive")}</span>
+        </label>
+      </div>
+
       <input type="hidden" name="context_id" value={id(@parent)}>
 
       <button

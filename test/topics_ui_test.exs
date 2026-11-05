@@ -100,4 +100,91 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
     |> wait_async()
     |> assert_has_or_open_browser("*", text: "My Test Topic")
   end
+
+  # a topic made in a group marked sensitive starts marked, which the form shows ticked and its author can untick
+  describe "the new-topic form" do
+    @new_topic "[data-id=group_hero] [data-id=group_topics] [data-role=group-topics-new] #new_topic_chips [data-role=open_modal]"
+
+    setup do
+      account = fake_account!()
+      creator = fake_user!(account)
+
+      group =
+        Bonfire.Classify.Simulate.fake_group!(creator, %{
+          name: "Life drawing",
+          membership: "open",
+          visibility: "global"
+        })
+
+      {:ok, conn: conn(user: creator, account: account), creator: creator, group: group}
+    end
+
+    defp topic_named(group, user, name) do
+      Bonfire.Classify.Categories.list_tree(
+        [:default, parent_category: id(group), tree_max_depth: 1, preload: :profile],
+        current_user: user
+      )
+      |> e(:edges, [])
+      |> Enum.find(&(e(&1, :profile, :name, nil) == name))
+    end
+
+    defp sensitive_topic?(group, user, name) do
+      topic = topic_named(group, user, name)
+      assert topic, "the topic was not created"
+
+      {:ok, topic} =
+        Bonfire.Classify.Categories.get(id(topic), [:default, skip_boundary_check: true])
+
+      Bonfire.Classify.Categories.sensitive?(topic)
+    end
+
+    test "in a group not marked sensitive opens with Mark as sensitive unticked", %{
+      conn: conn,
+      group: group
+    } do
+      conn
+      |> visit("/group/#{group.character.username}")
+      |> click_button(@new_topic, "New topic")
+      |> assert_has("#new_topic_form #new_topic_sensitive[type=checkbox]")
+      |> refute_has("#new_topic_form #new_topic_sensitive[checked]")
+    end
+
+    test "in a group marked sensitive opens with Mark as sensitive ticked", %{
+      conn: conn,
+      creator: creator,
+      group: group
+    } do
+      assert {:ok, _} = Bonfire.Social.Objects.set_sensitivity(group, true)
+
+      conn
+      |> visit("/group/#{group.character.username}")
+      |> click_button(@new_topic, "New topic")
+      |> assert_has("#new_topic_form #new_topic_sensitive[checked]")
+      |> fill_in("Topic name", with: "Figure studies")
+      |> click_button("[data-role=new_topic_submit]", "Create")
+      |> assert_has("[data-id=group_topics] [data-role=group-topic-current]",
+        text: "Figure studies"
+      )
+
+      assert sensitive_topic?(group, creator, "Figure studies") == true
+    end
+
+    test "submitted unticked in a group marked sensitive makes an unmarked topic", %{
+      conn: conn,
+      creator: creator,
+      group: group
+    } do
+      assert {:ok, _} = Bonfire.Social.Objects.set_sensitivity(group, true)
+
+      conn
+      |> visit("/group/#{group.character.username}")
+      |> click_button(@new_topic, "New topic")
+      |> fill_in("Topic name", with: "Materials")
+      |> uncheck("Mark as sensitive")
+      |> click_button("[data-role=new_topic_submit]", "Create")
+      |> assert_has("[data-id=group_topics] [data-role=group-topic-current]", text: "Materials")
+
+      assert sensitive_topic?(group, creator, "Materials") == false
+    end
+  end
 end
