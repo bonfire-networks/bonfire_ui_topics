@@ -68,7 +68,13 @@
       <div class="w-full form-control">
         {!-- `category[…]`, which `Bonfire.Classify.LiveHandler.new/3` merges in, rather than a bare `sensitive`, which the composer's own field is named --}
         <input type="hidden" name="category[sensitive]" value="false">
-        <label for="new_topic_sensitive" class="flex items-center gap-3 cursor-pointer">
+        {!-- `phx-update="ignore"`: the form's `change` (`Bonfire.Classify:validate`) re-renders it, which set `checked` back to the parent group's mark on every click, so the box couldn't be toggled; the server value is only the starting state --}
+        <label
+          id="new_topic_sensitive_label"
+          phx-update="ignore"
+          for="new_topic_sensitive"
+          class="flex items-center gap-3 cursor-pointer"
+        >
           <input
             id="new_topic_sensitive"
             type="checkbox"

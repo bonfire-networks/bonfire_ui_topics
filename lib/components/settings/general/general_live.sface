@@ -15,7 +15,8 @@
       set_fn={&Bonfire.Classify.LiveHandler.set_image/5}
     /> -->
 
-    <form phx-submit="Bonfire.Classify:edit">
+    {!-- no `phx-change`, so nothing re-renders the switch's box back to the saved mark while it is being ticked --}
+    <form id="topic_settings_form" phx-submit="Bonfire.Classify:edit">
       <div class="w-full form-control">
         <input
           id="name"
@@ -39,7 +40,21 @@
     </select>
   </div> --}
 
-      <button type="submit" class="w-full mt-3 normal-case btn btn-primary">
+      {!-- `Bonfire.Classify:edit` passes `category[sensitive]` on to `Categories.update/4` --}
+      <div class="w-full mt-3">
+        <Bonfire.Classify.Web.SensitiveSwitchLive
+          category={@category}
+          id="topic_settings_sensitive"
+          label={l("Mark this topic as sensitive")}
+          help={l("People see a content warning before its posts.")}
+        />
+      </div>
+
+      <button
+        type="submit"
+        data-role="topic_settings_submit"
+        class="w-full mt-3 normal-case btn btn-primary"
+      >
         {l("Edit")}
       </button>
     </form>

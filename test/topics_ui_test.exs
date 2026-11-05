@@ -187,4 +187,78 @@ defmodule Bonfire.UI.Topics.TopicsUITest do
       assert sensitive_topic?(group, creator, "Materials") == false
     end
   end
+
+  # a topic keeps its own mark after it is made, which its moderators turn on or off in its settings, opened from the topic's chip
+  describe "a topic's settings" do
+    setup do
+      account = fake_account!()
+      creator = fake_user!(account)
+
+      group =
+        Bonfire.Classify.Simulate.fake_group!(creator, %{
+          name: "Life drawing",
+          membership: "open",
+          visibility: "global"
+        })
+
+      topic =
+        Bonfire.Classify.Simulate.fake_category!(creator, group, %{
+          name: "Figure studies",
+          type: :topic
+        })
+
+      {:ok, conn: conn(user: creator, account: account), group: group, topic: topic}
+    end
+
+    defp open_topic_settings(conn, group, topic) do
+      conn
+      |> visit(Bonfire.Classify.Web.GroupNavigation.topic_path(group, topic))
+      |> click_button(
+        "[data-id=group_topics] #edit_topic_modal_#{uid(topic)} [data-role=open_modal]",
+        "Topic settings"
+      )
+    end
+
+    defp topic_sensitive?(topic) do
+      {:ok, topic} =
+        Bonfire.Classify.Categories.get(id(topic), [:default, skip_boundary_check: true])
+
+      Bonfire.Classify.Categories.sensitive?(topic)
+    end
+
+    test "ticking Mark this topic as sensitive and saving marks the topic", %{
+      conn: conn,
+      group: group,
+      topic: topic
+    } do
+      assert topic_sensitive?(topic) == false
+
+      conn
+      |> open_topic_settings(group, topic)
+      |> refute_has("#topic_settings_form #topic_settings_sensitive[checked]")
+      |> check("Mark this topic as sensitive")
+      |> click_button("#topic_settings_form [data-role=topic_settings_submit]", "Edit")
+      |> assert_has("[role=alert]", text: "Category updated!")
+
+      assert topic_sensitive?(topic) == true
+    end
+
+    test "unticking Mark this topic as sensitive and saving unmarks the topic", %{
+      conn: conn,
+      group: group,
+      topic: topic
+    } do
+      assert {:ok, _} = Bonfire.Social.Objects.set_sensitivity(topic, true)
+      assert topic_sensitive?(topic) == true
+
+      conn
+      |> open_topic_settings(group, topic)
+      |> assert_has("#topic_settings_form #topic_settings_sensitive[checked]")
+      |> uncheck("Mark this topic as sensitive")
+      |> click_button("#topic_settings_form [data-role=topic_settings_submit]", "Edit")
+      |> assert_has("[role=alert]", text: "Category updated!")
+
+      assert topic_sensitive?(topic) == false
+    end
+  end
 end
