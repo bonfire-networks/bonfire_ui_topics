@@ -5,7 +5,18 @@
   aria-labelledby="topic-access-title"
 >
   <div class="overflow-hidden border-b border-divider bg-base-100">
-    <div class="h-20 overflow-hidden bg-fill-strong sm:h-24" aria-hidden="true">
+    {!-- the parent group's minimal header (folded, no banner, description or members), only when the viewer may see that group; the gate below offers the actions. The strip showed the parent's banner image. --}
+    <StatelessComponent
+      :if={@parent}
+      module={maybe_component(Bonfire.UI.Groups.GroupHeroLive, @__context__)}
+      group={@parent}
+      permalink={path(@parent)}
+      view_mode={:preview}
+      membership_slug={@membership}
+      group_return_to={@group_return_to}
+      actions={false}
+    />
+    {!-- <div class="h-20 overflow-hidden bg-fill-strong sm:h-24" aria-hidden="true">
       {#if @parent}
         {#case Media.banner_url(@parent, fallback: false)}
           {#match nil}
@@ -13,7 +24,7 @@
             <img src={banner} alt="" class="size-full object-cover">
         {/case}
       {/if}
-    </div>
+    </div> --}
     <div class="flex flex-col items-start gap-5 bg-fill p-5 sm:p-6">
       <header class="flex w-full min-w-0 items-start gap-3">
         <span
