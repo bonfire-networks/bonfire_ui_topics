@@ -1,0 +1,69 @@
+<li :if={@show_follow and not is_nil(e(@topic, :character, nil)) and current_user_id(@__context__)}>
+  <StatefulComponent
+    module={maybe_component(Bonfire.UI.Social.Graph.FollowButtonLive, @__context__)}
+    id={"group_topic_follow_#{id(@topic)}"}
+    object_id={uid(@topic)}
+    object={@topic}
+    path={path(@topic)}
+    title={l("Follow topic")}
+    title_already={l("Unfollow topic")}
+    verb={l("Follow topic")}
+    verb_undo={l("Unfollow topic")}
+    verb_already={l("Unfollow topic")}
+    icon="ph:rss"
+    icon_already="ph:rss"
+    icon_class="size-4 shrink-0"
+    container_class="flex w-full"
+    class="flex items-center gap-3 w-full text-sm text-muted"
+    class_already="flex items-center gap-3 w-full text-sm text-primary"
+    with_bell={false}
+  />
+</li>
+<li :if={@show_follow and current_user_id(@__context__)}>
+  <StatefulComponent
+    module={maybe_component(Bonfire.Notify.Web.BellButtonLive, @__context__)}
+    id={bell_id(@topic)}
+    object={@topic}
+    lazy
+    menu_item
+  />
+</li>
+<li>
+  <a
+    phx-hook="Copy"
+    id={"group-topic-copy-url-#{id(@topic)}"}
+    href={copy_url(@topic, @group)}
+    target="_top"
+    class="flex items-center gap-3 text-sm"
+  >
+    <#Icon iconify="ph:copy-duotone" class="size-4 shrink-0 text-muted" />
+    <span class="flex-1 truncate" data-role="label">{l("Copy link")}</span>
+  </a>
+</li>
+{!-- a topic hosted elsewhere: fetches what its origin has posted that we have not met, into the topic's feed here --}
+<li :if={not is_nil(e(@topic, :character, :peered, nil)) and current_user_id(@__context__)}>
+  <button
+    type="button"
+    phx-click="Bonfire.Me.Users:fetch_outbox"
+    phx-value-id={id(@topic)}
+    class="flex items-center gap-3 w-full text-sm text-base-content"
+  >
+    <#Icon iconify="ph:sort-ascending-duotone" class="size-4 shrink-0 text-muted" />
+    <span class="flex-1 truncate">{l("Get latest activities")}</span>
+  </button>
+</li>
+<li :if={@can_edit}>
+  <Bonfire.UI.Common.OpenModalLive
+    id={"edit_topic_modal_#{uid(@topic)}"}
+    title_text={l("Edit topic")}
+    no_actions
+    open_btn_aria_label={l("Edit topic")}
+    open_btn_wrapper_class="flex items-center gap-3 w-full text-sm"
+  >
+    <Bonfire.UI.Topics.Settings.GeneralLive category={@topic} />
+    <:open_btn>
+      <#Icon iconify="ph:gear-six-duotone" class="size-4 shrink-0 text-muted" />
+      <span class="flex-1 truncate text-left">{l("Topic settings")}</span>
+    </:open_btn>
+  </Bonfire.UI.Common.OpenModalLive>
+</li>

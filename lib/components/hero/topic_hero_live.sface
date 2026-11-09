@@ -10,7 +10,8 @@
     class="h-24 overflow-hidden bg-primary sm:h-28"
     aria-hidden="true"
   >
-    {#case Media.banner_url(@user, fallback: false)}
+    {!-- a topic in a group shows the group's banner; a top-level topic, with no group, its own --}
+    {#case Media.banner_url(@user || @category, fallback: false)}
       {#match nil}
       {#match banner}
         <img src={banner} alt="" class="h-full w-full object-cover">
@@ -57,6 +58,7 @@
         verb_undo={l("Unfollow topic")}
         verb_already={l("Following")}
       />
+      {!-- the header has no gear button of its own: Topic settings is in the actions menu, as in a group's selected topic chip
       <span :if={current_user_id(@__context__) &&
         Bonfire.Classify.ensure_update_allowed(current_user(@__context__), @category)}>
         <Bonfire.UI.Common.OpenModalLive
@@ -73,6 +75,28 @@
           </:open_btn>
         </Bonfire.UI.Common.OpenModalLive>
       </span>
+      --}
+      {!-- the follow and bell buttons above are the page's own, so the menu leaves them out --}
+      <Dropdown
+        id={"topic-menu-#{id(@category)}"}
+        position="bottom-end"
+        trigger_class="btn btn-sm btn-circle border-0 bg-surface text-muted shadow-none hover:bg-fill-strong"
+        panel_class="dropdown_actions text-base-content"
+        wrapper_opts={["data-role": "topic-actions"]}
+        label={l("Actions for topic %{name}",
+          name: e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))
+        )}
+        expanded_touch_target
+      >
+        <:trigger>
+          <#Icon iconify="ph:dots-three-outline-fill" class="size-4" />
+        </:trigger>
+        <StatelessComponent
+          module={maybe_component(Bonfire.UI.Topics.TopicActionsLive, @__context__)}
+          topic={@category}
+          show_follow={false}
+        />
+      </Dropdown>
     </div>
     <div class={"min-w-0", if(@compact, do: "flex-1 order-0", else: "basis-full order-2")}>
       {#if @compact}
@@ -89,8 +113,16 @@
         <h1 id="topic-title" class="type-title leading-tight text-base-content break-words">
           {e(@category, :profile, :name, nil) || e(@category, :name, l("Untitled topic"))}
         </h1>
+        {!-- the full variant is a standalone topic's page, so its address and description show here (inside a group they are under the topic tabs) --}
+        <StatelessComponent
+          module={maybe_component(Bonfire.UI.Topics.TopicAboutLive, @__context__)}
+          category={@category}
+          id_prefix="topic-hero-address"
+          address_class="mt-0.5 block text-sm text-muted"
+        />
       {/if}
-      <!-- <div
+      {!-- the description is `TopicAboutLive`'s, shown with the address in the full variant; the compact variant shows none, and this markup is its shape if it gets one
+      <div
         :if={e(@category, :profile, :summary, nil)}
         id="topic-description"
         class={
@@ -99,7 +131,8 @@
         }
       >
         {rich(e(@category, :profile, :summary, nil))}
-      </div> -->
+      </div>
+      --}
     </div>
   </div>
 </section>

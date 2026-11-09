@@ -1,0 +1,17 @@
+<StatelessComponent
+  module={maybe_component(Bonfire.UI.Groups.GroupAddressLive, @__context__)}
+  group={@category}
+  id_prefix={@id_prefix}
+  class={@address_class}
+/>
+{#case e(@category, :profile, :summary, nil)}
+  {#match nil}
+  {#match summary}
+    <div data-role="group-topic-summary">
+      <Bonfire.UI.Common.TruncatableLive
+        id={"group-topic-summary-#{id(@category)}"}
+        html={rich(summary)}
+        class="mt-2 prose !text-[0.9375rem] max-w-none [&>p:first-child]:mt-0 [&>p:last-child]:mb-0"
+      />
+    </div>
+{/case}
