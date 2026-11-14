@@ -63,14 +63,26 @@ defmodule Bonfire.UI.Topics.TopicHeaderTest do
           summary: "Passages worth discussing."
         })
 
-      address = Bonfire.Me.Characters.display_username(topic, true)
+      address = Bonfire.Me.Characters.display_username(topic, true, nil, "")
 
       conn(user: me, account: account)
       |> visit("/+#{topic.character.username}")
       |> assert_has("[data-id=topic_subheader] h1", text: "Standalone notes")
-      |> assert_has(
-        "[data-id=topic_subheader] [data-role=group-address][data-clipboard-text='#{address}']"
+      # the visible text may break before the host (`<wbr>`), so the handle and the host are checked apart
+      |> assert_has("[data-id=topic_subheader] [data-role=group-address]",
+        text: "Standalone_notes"
       )
+      |> assert_has("[data-id=topic_subheader] [data-role=group-address]",
+        text: "@#{List.last(String.split(address, "@"))}"
+      )
+      |> assert_has(
+        "[data-id=topic_subheader] [data-role=group-address-copy][phx-hook=Copy][data-clipboard-text='!#{address}']"
+      )
+      |> assert_has(
+        "[data-id=topic_subheader] [data-role=group-address-copy][phx-hook=Copy][data-clipboard-text='@#{address}']"
+      )
+      # old: the address, with its `+`, was the copy target
+      # |> assert_has("[data-id=topic_subheader] [data-role=group-address][data-clipboard-text='#{address}']")
       |> assert_has("[data-id=topic_subheader] [data-role=group-topic-summary]",
         text: "Passages worth discussing."
       )
