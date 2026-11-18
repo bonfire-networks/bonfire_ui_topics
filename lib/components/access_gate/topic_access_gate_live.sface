@@ -51,7 +51,7 @@
         {#if @can_join?}
           <p class="text-sm text-muted">{l("Use the group's membership options below, or visit the group for access details.")}</p>
           <StatefulComponent
-            id={"join_btn_#{id(@parent)}"}
+            id={ComponentID.new(Bonfire.Classify.Web.JoinButtonLive, id(@parent), __MODULE__)}
             module={maybe_component(Bonfire.Classify.Web.JoinButtonLive, @__context__)}
             object_id={id(@parent)}
             object={@parent}
