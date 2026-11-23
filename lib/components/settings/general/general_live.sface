@@ -59,6 +59,14 @@
       </button>
     </form>
 
+    {!-- its colour and icon, saved on their own (not with the form) --}
+    <div id="topic_settings_appearance" class="mt-6">
+      <Bonfire.Classify.Web.AppearanceLive
+        id={"topic_appearance_#{id(@category)}"}
+        category={@category}
+      />
+    </div>
+
     {!-- Danger zone — soft-delete (archive), restorable later. --}
     <section
       aria-labelledby="topic-settings-danger-heading"

@@ -23,7 +23,9 @@ defmodule Bonfire.UI.Topics.TopicHeaderTest do
     |> wait_async()
     |> assert_has("h1", text: "Standalone notes", count: 1)
     |> assert_has("[data-id=topic_subheader][data-variant=full]")
-    |> assert_has("#topic-parent-banner.bg-primary")
+    # (the band with no banner was always `bg-primary`; it is now in the topic's swatch, `topic_hero_band`, tested in `topic_appearance_test.exs`)
+    # |> assert_has("#topic-parent-banner.bg-primary")
+    |> assert_has("#topic-parent-banner[data-role=topic_hero_band][class*='topic-']")
     |> assert_has("#topic-icon")
     # |> assert_has("#topic-description", text: "Passages worth discussing.")
     |> refute_has("[data-id=group_topics]")
@@ -190,6 +192,48 @@ defmodule Bonfire.UI.Topics.TopicHeaderTest do
       conn(user: me, account: account)
       |> visit("/topic/#{topic.id}/followers")
       |> assert_has("#topic-parent-banner img[src='#{group_banner_url}']")
+    end
+  end
+
+  describe "the group's tile in the link back to it" do
+    @link "#topic-parent-link"
+
+    test "shows the group's picked icon in its colour, a plain group its letter", %{
+      account: account,
+      me: me
+    } do
+      picked = fake_group!(me, %{name: "Picked reading group"})
+      {:ok, _} = Bonfire.Classify.Appearance.set_icon(picked, "ph:baby-fill", current_user: me)
+      {:ok, _} = Bonfire.Classify.Appearance.set_colour(picked, "teal", current_user: me)
+      picked_topic = fake_category!(me, picked, %{name: "Picked notes", type: :topic})
+
+      plain = fake_group!(me, %{name: "Plain reading group"})
+      plain_topic = fake_category!(me, plain, %{name: "Plain notes", type: :topic})
+
+      conn(user: me, account: account)
+      |> visit("/topic/#{picked_topic.id}/followers")
+      |> assert_has("#{@link} [data-role=group_tile][data-icon='ph:baby-fill'].topic-teal")
+
+      conn(user: me, account: account)
+      |> visit("/topic/#{plain_topic.id}/followers")
+      |> assert_has("#{@link} [data-role=group_tile]", text: "P")
+      |> refute_has("#{@link} [data-role=group_tile][data-icon]")
+    end
+
+    @tag Bonfire.Common.RuntimeConfig.skip_in_ci()
+    test "shows the group's uploaded image over its picked icon", %{account: account, me: me} do
+      group = fake_group!(me, %{name: "Parent reading group"})
+      {:ok, _} = Bonfire.Classify.Appearance.set_icon(group, "ph:baby-fill", current_user: me)
+      topic = fake_category!(me, group, %{name: "Reading notes", type: :topic})
+      media = Bonfire.Social.Fake.upload_media(:images, me)
+
+      {:ok, with_image} =
+        Bonfire.Classify.Categories.update(me, group, %{profile: %{icon_id: media.id}})
+
+      conn(user: me, account: account)
+      |> visit("/topic/#{topic.id}/followers")
+      |> assert_has("#{@link} img[src='#{Bonfire.Common.Media.avatar_url(with_image)}']")
+      |> refute_has("#{@link} [data-role=group_tile]")
     end
   end
 end

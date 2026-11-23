@@ -4,19 +4,21 @@
   aria-label={l("Topic")}
   class={"border-b-hair border-divider", if(@compact, do: "bg-base-100", else: "bg-base-200")}
 >
-  <div
-    :if={not @compact}
-    id="topic-parent-banner"
-    class="h-24 overflow-hidden bg-primary sm:h-28"
-    aria-hidden="true"
-  >
-    {!-- a topic in a group shows the group's banner; a top-level topic, with no group, its own --}
-    {#case Media.banner_url(@user || @category, fallback: false)}
-      {#match nil}
-      {#match banner}
+  {!-- a topic in a group shows the group's banner; a top-level topic, with no group, its own. With none, a band in the topic's colour (was always `bg-primary`) --}
+  {#case if(not @compact, do: Media.banner_url(@user || @category, fallback: false), else: :compact)}
+    {#match :compact}
+    {#match nil}
+      <div
+        id="topic-parent-banner"
+        data-role="topic_hero_band"
+        class={"h-24 overflow-hidden topic-wash sm:h-28", band_class(@category)}
+        aria-hidden="true"
+      />
+    {#match banner}
+      <div id="topic-parent-banner" class="h-24 overflow-hidden bg-primary sm:h-28" aria-hidden="true">
         <img src={banner} alt="" class="h-full w-full object-cover">
-    {/case}
-  </div>
+      </div>
+  {/case}
   {!-- one wrapping row, so the actions are written once: full puts the icon and actions on top and the text below; compact puts the text first, actions beside it --}
   <div class={
     "flex flex-wrap items-center gap-x-3 px-4",
@@ -30,7 +32,8 @@
     >
       {#case Media.avatar_url(@category)}
         {#match "/images/avatar.png"}
-          <#Icon iconify="ph:hash" class="size-7" />
+          {!-- no uploaded image: the picked icon, else the hash --}
+          <Iconify.iconify icon={picked_icon(@category) || "ph:hash"} class="size-7" />
         {#match url}
           <img src={url} alt="" width="48" height="48" class="h-full w-full object-cover">
       {/case}
